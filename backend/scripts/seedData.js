@@ -5,6 +5,7 @@ import Project from '../models/Project.js';
 import Skill from '../models/Skill.js';
 import Experience from '../models/Experience.js';
 import Blog from '../models/Blog.js';
+import Quote from '../models/Quote.js';
 
 dotenv.config();
 
@@ -172,7 +173,7 @@ const seedExperience = async () => {
 const seedProjects = async () => {
   try {
     const projectCount = await Project.countDocuments();
-    
+
     if (projectCount === 0) {
       const projects = [
         {
@@ -261,7 +262,7 @@ const seedProjects = async () => {
           priority: 3,
         },
       ];
-      
+
       await Project.insertMany(projects);
       console.log('✅ Projects seeded');
     } else {
@@ -272,16 +273,101 @@ const seedProjects = async () => {
   }
 };
 
+const seedQuotes = async () => {
+  try {
+    const quotesCount = await Quote.countDocuments();
+
+    if (quotesCount === 0) {
+      const quotes = [
+        {
+          text: "Code is like humor. When you have to explain it, it's bad.",
+          author: "Cory House",
+          field: "Software Development",
+          category: "programming",
+          command: "const cleanCode = code => !needsExplanation(code);",
+          tags: ["coding", "clean code", "best practices"],
+          featured: true,
+          priority: 1,
+        },
+        {
+          text: "First, solve the problem. Then, write the code.",
+          author: "John Johnson",
+          field: "Programming",
+          category: "development",
+          command: "function solve(problem) { return implement(solution(problem)); }",
+          tags: ["problem-solving", "algorithm", "development"],
+          featured: true,
+          priority: 2,
+        },
+        {
+          text: "The best way to predict the future is to implement it.",
+          author: "David Heinemeier Hansson",
+          field: "Innovation",
+          category: "technology",
+          command: "const future = await implement(currentIdeas);",
+          tags: ["innovation", "implementation", "future"],
+          featured: true,
+          priority: 3,
+        },
+        {
+          text: "Simplicity is the soul of efficiency.",
+          author: "Austin Freeman",
+          field: "Design & Development",
+          category: "design",
+          command: "simple = complex.filter(essential => true).reduce(keep);",
+          tags: ["simplicity", "design", "efficiency"],
+          priority: 4,
+        },
+        {
+          text: "Make it work, make it right, make it fast.",
+          author: "Kent Beck",
+          field: "Software Principles",
+          category: "software",
+          command: "while (!working) { code(); optimize(); refine(); }",
+          tags: ["development", "optimization", "quality"],
+          priority: 5,
+        },
+        {
+          text: "Programs must be written for people to read, and only incidentally for machines to execute.",
+          author: "Harold Abelson",
+          field: "Computer Science",
+          category: "programming",
+          command: "const readableCode = humans.comprehend(code);",
+          tags: ["readability", "maintainability", "clean code"],
+          priority: 6,
+        },
+        {
+          text: "The only way to learn a new programming language is by writing programs in it.",
+          author: "Dennis Ritchie",
+          field: "Programming Education",
+          category: "programming",
+          command: "const learn = language => practice(language, projects);",
+          tags: ["learning", "practice", "education"],
+          priority: 7,
+        },
+      ];
+
+      await Quote.insertMany(quotes);
+      console.log('✅ Quotes seeded');
+    } else {
+      console.log('ℹ️  Quotes already exist');
+    }
+  } catch (error) {
+    console.error('❌ Error seeding quotes:', error);
+  }
+};
+
 const seedAll = async () => {
   await connectDB();
-  
+
   console.log('\n🌱 Starting database seeding...\n');
-  
+
   await seedAdmin();
   await seedSkills();
   await seedExperience();
   await seedProjects();
-  
+  await seedQuotes();
+
   console.log('\n✅ Database seeding completed!\n');
   process.exit(0);
 };

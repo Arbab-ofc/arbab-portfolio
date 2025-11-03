@@ -41,7 +41,7 @@ const QuoteCarousel = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % quotes.length);
-    }, 4000); // Change quote every 4 seconds
+    }, 3000); // Change quote every 3 seconds
 
     return () => clearInterval(interval);
   }, [quotes.length]);

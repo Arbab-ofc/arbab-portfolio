@@ -15,6 +15,7 @@ const BlogPost = lazy(() => import('./pages/BlogPost'));
 const Contact = lazy(() => import('./pages/Contact'));
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
 const TermsOfServices = lazy(() => import('./pages/TermsOfServices'));
+const Quotes = lazy(() => import('./pages/Quotes'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const AdminLogin = lazy(() => import('./pages/AdminLogin'));
 const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
@@ -48,6 +49,7 @@ function App() {
             <Route path="contact" element={<Contact />} />
             <Route path="privacy-policy" element={<PrivacyPolicy />} />
             <Route path="terms-of-services" element={<TermsOfServices />} />
+            <Route path="quotes" element={<Quotes />} />
             <Route path="*" element={<NotFound />} />
           </Route>
         </Routes>

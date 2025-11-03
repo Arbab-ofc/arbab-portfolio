@@ -17,6 +17,7 @@ import connectDB from './config/database.js';
 
 // Import routes
 import projectRoutes from './routes/projectRoutes.js';
+import quoteRoutes from './routes/quoteRoutes.js';
 import {
   authRouter,
   blogRouter,
@@ -117,6 +118,7 @@ app.get('/health', (req, res) => {
 // API Routes
 app.use('/api/auth', authRouter);
 app.use('/api/projects', projectRoutes);
+app.use('/api/quotes', quoteRoutes);
 app.use('/api/blogs', blogRouter);
 app.use('/api/skills', skillRouter);
 app.use('/api/experience', experienceRouter);

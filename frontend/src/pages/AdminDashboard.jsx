@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { analyticsAPI, projectsAPI, blogsAPI, contactAPI, skillsAPI, experienceAPI } from '../utils/api';
+import { analyticsAPI, projectsAPI, blogsAPI, contactAPI, skillsAPI, experienceAPI, quotesAPI } from '../utils/api';
 import ProjectEditModal from '../components/admin/ProjectEditModal';
 import {
   HiViewGrid,
@@ -30,6 +30,7 @@ const AdminDashboard = () => {
   const [contacts, setContacts] = useState([]);
   const [skills, setSkills] = useState([]);
   const [experiences, setExperiences] = useState([]);
+  const [quotes, setQuotes] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const [editItem, setEditItem] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -78,6 +79,19 @@ const AdminDashboard = () => {
       seoTitle: '',
       seoDescription: '',
       seoKeywords: '',
+    },
+    quote: {
+      text: '',
+      author: '',
+      field: '',
+      category: 'programming',
+      command: '',
+      featured: false,
+      tags: '',
+      source: '',
+      context: '',
+      priority: 0,
+      active: true,
     },
   };
 
@@ -216,13 +230,14 @@ const AdminDashboard = () => {
   const fetchDashboardData = async () => {
     try {
       setLoading(true);
-      const [analyticsRes, projectsRes, blogsRes, contactsRes, skillsRes, experienceRes] = await Promise.all([
+      const [analyticsRes, projectsRes, blogsRes, contactsRes, skillsRes, experienceRes, quotesRes] = await Promise.all([
         fetchWithRetry(() => analyticsAPI.getOverview()).catch(() => ({ data: { totalVisits: 0, uniqueVisitors: 0, deviceStats: [], topPages: [] } })),
         fetchWithRetry(() => projectsAPI.getAll()),
         fetchWithRetry(() => blogsAPI.getAll()),
         fetchWithRetry(() => contactAPI.getAll()),
         fetchWithRetry(() => skillsAPI.getAll()),
-        fetchWithRetry(() => experienceAPI.getAll())
+        fetchWithRetry(() => experienceAPI.getAll()),
+        fetchWithRetry(() => quotesAPI.getAll())
       ]);
 
       setAnalytics(analyticsRes.data);
@@ -234,6 +249,7 @@ const AdminDashboard = () => {
         : Object.values(skillsRes.data?.data || {}).flat();
       setSkills(flatSkills);
       setExperiences(sortExperiencesList(experienceRes.data?.data || []));
+      setQuotes(quotesRes.data?.data || []);
     } catch (err) {
       const message =
         err?.response?.status === 429
@@ -401,6 +417,54 @@ const AdminDashboard = () => {
         }
 
         setShowCreateModal(false);
+      } else if (createType === 'quote') {
+        const payload = {
+          text: sanitizeString(formData.text),
+          author: sanitizeString(formData.author),
+          field: sanitizeString(formData.field),
+          category: formData.category || 'programming',
+          command: sanitizeString(formData.command) || undefined,
+          featured: !!formData.featured,
+          tags: formData.tags ? parseListField(formData.tags) : [],
+          source: sanitizeString(formData.source) || undefined,
+          context: sanitizeString(formData.context) || undefined,
+          priority: Number(formData.priority) || 0,
+          active: formData.active !== undefined ? !!formData.active : true,
+        };
+
+        Object.keys(payload).forEach(key => {
+          if (
+            payload[key] === undefined ||
+            (Array.isArray(payload[key]) && payload[key].length === 0) ||
+            payload[key] === ''
+          ) {
+            delete payload[key];
+          }
+        });
+
+        if (editMode && editItem) {
+          // Update existing quote
+          const response = await quotesAPI.update(editItem._id, payload);
+          const updatedQuote = response.data?.data;
+
+          if (updatedQuote) {
+            setQuotes(prev => prev.map(q => q._id === editItem._id ? updatedQuote : q));
+          } else {
+            await fetchDashboardData();
+          }
+        } else {
+          // Create new quote
+          const response = await quotesAPI.create(payload);
+          const newQuote = response.data?.data;
+
+          if (newQuote) {
+            setQuotes(prev => [...(prev || []), newQuote]);
+          } else {
+            await fetchDashboardData();
+          }
+        }
+
+        setShowCreateModal(false);
       } else {
         setFormError('Creation flow for this content type is not implemented yet.');
       }
@@ -437,6 +501,21 @@ const AdminDashboard = () => {
     } catch (error) {
       console.error('Error deleting project:', error);
       alert('Failed to delete project. Please try again.');
+    }
+  };
+
+  const handleDeleteQuote = async (quoteId) => {
+    if (!window.confirm('Are you sure you want to delete this quote? This action cannot be undone.')) {
+      return;
+    }
+
+    try {
+      await quotesAPI.delete(quoteId);
+      setQuotes(prev => prev.filter(q => q._id !== quoteId));
+      // You could add a success toast notification here
+    } catch (error) {
+      console.error('Error deleting quote:', error);
+      alert('Failed to delete quote. Please try again.');
     }
   };
 
@@ -866,6 +945,57 @@ const AdminDashboard = () => {
         </div>
 
         <div className="rounded-3xl border border-white/10 bg-white/10 p-6 backdrop-blur-xl shadow-lg">
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg font-semibold text-white">Quotes</h3>
+            <button
+              onClick={() => {
+                setCreateType('quote');
+                setShowCreateModal(true);
+              }}
+              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-white/80 transition hover:border-white/30 hover:bg-white/10"
+            >
+              <HiPlus className="text-sm" />
+              Add Quote
+            </button>
+          </div>
+          <div className="mt-6 space-y-3">
+            {quotes.slice(0, 5).map(quote => (
+              <div key={quote._id} className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm font-semibold text-white/80">"{quote.text}"</p>
+                  <p className="text-xs text-white/50">- {quote.author}</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => {
+                      setEditItem(quote);
+                      setEditMode(true);
+                      setCreateType('quote');
+                      setShowCreateModal(true);
+                    }}
+                    className="rounded-full border border-sky-400/40 bg-sky-500/15 p-2 text-sky-200 transition hover:border-sky-300/60 hover:bg-sky-500/25"
+                    title="Edit quote"
+                  >
+                    <HiPencil className="h-3 w-3" />
+                  </button>
+                  <button
+                    onClick={() => handleDeleteQuote(quote._id)}
+                    className="rounded-full border border-red-400/40 bg-red-500/15 p-2 text-red-200 transition hover:border-red-300/60 hover:bg-red-500/25"
+                    title="Delete quote"
+                  >
+                    <HiTrash className="h-3 w-3" />
+                  </button>
+                </div>
+              </div>
+            ))}
+            {quotes.length === 0 && <p className="text-xs text-white/60">No quotes yet.</p>}
+            {quotes.length > 5 && (
+              <p className="text-xs text-white/60">...and {quotes.length - 5} more quotes</p>
+            )}
+          </div>
+        </div>
+
+        <div className="rounded-3xl border border-white/10 bg-white/10 p-6 backdrop-blur-xl shadow-lg">
           <h3 className="text-lg font-semibold text-white">Quick Actions</h3>
           <div className="mt-6 space-y-3">
             {[
@@ -944,6 +1074,7 @@ const AdminDashboard = () => {
             <StatCard title="Published Blogs" value={blogs.length} icon={HiDocumentText} accent="from-purple-500/80 to-fuchsia-400/50" />
             <StatCard title="Skills" value={skills.length} icon={HiUsers} accent="from-emerald-500/80 to-teal-400/50" />
             <StatCard title="Experience" value={experiences.length} icon={HiBriefcase} accent="from-orange-500/80 to-amber-400/50" />
+            <StatCard title="Quotes" value={quotes.length} icon={HiSparkles} accent="from-teal-500/80 to-cyan-400/50" />
             <StatCard title="Messages" value={contacts.length} icon={HiMail} accent="from-rose-500/80 to-pink-400/50" />
             <StatCard title="Total Visitors" value={analytics?.totalVisits || 0} icon={HiChartBar} accent="from-indigo-500/80 to-blue-400/50" />
           </div>
@@ -987,7 +1118,7 @@ const AdminDashboard = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 py-10 backdrop-blur-md">
           <div className="w-full max-w-3xl overflow-hidden rounded-3xl border border-white/10 bg-slate-900/80 shadow-2xl backdrop-blur-2xl">
             <div className="sticky top-0 flex items-center justify-between border-b border-white/10 bg-white/5 px-6 py-4">
-              <h3 className="text-lg font-semibold text-white">Create New {createType}</h3>
+              <h3 className="text-lg font-semibold text-white">{editMode ? 'Edit' : 'Create New'} {createType}</h3>
               <button
                 onClick={() => setShowCreateModal(false)}
                 className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-white/70 transition hover:border-white/30 hover:text-white"
@@ -1270,6 +1401,116 @@ const AdminDashboard = () => {
                   </div>
                 )}
 
+                {createType === 'quote' && (
+                  <div className="grid gap-4">
+                    <textarea
+                      placeholder="Quote Text *"
+                      name="text"
+                      value={formData.text || ''}
+                      onChange={handleInputChange}
+                      rows="3"
+                      required
+                      className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white focus:border-sky-400 focus:outline-none"
+                    ></textarea>
+                    <input
+                      type="text"
+                      placeholder="Author *"
+                      name="author"
+                      value={formData.author || ''}
+                      onChange={handleInputChange}
+                      required
+                      className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white focus:border-sky-400 focus:outline-none"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Field/Category"
+                      name="field"
+                      value={formData.field || ''}
+                      onChange={handleInputChange}
+                      className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white focus:border-sky-400 focus:outline-none"
+                    />
+                    <select
+                      name="category"
+                      value={formData.category || 'programming'}
+                      onChange={handleInputChange}
+                      className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white focus:border-sky-400 focus:outline-none"
+                    >
+                      <option value="programming" className="text-black">Programming</option>
+                      <option value="development" className="text-black">Development</option>
+                      <option value="technology" className="text-black">Technology</option>
+                      <option value="innovation" className="text-black">Innovation</option>
+                      <option value="design" className="text-black">Design</option>
+                      <option value="leadership" className="text-black">Leadership</option>
+                      <option value="ai" className="text-black">AI</option>
+                      <option value="web" className="text-black">Web</option>
+                      <option value="software" className="text-black">Software</option>
+                      <option value="other" className="text-black">Other</option>
+                    </select>
+                    <input
+                      type="text"
+                      placeholder="Code Command (optional)"
+                      name="command"
+                      value={formData.command || ''}
+                      onChange={handleInputChange}
+                      className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white focus:border-sky-400 focus:outline-none"
+                    />
+                    <div className="flex items-center gap-4">
+                      <label className="flex items-center gap-2 text-sm text-white/70">
+                        <input
+                          type="checkbox"
+                          name="featured"
+                          checked={!!formData.featured}
+                          onChange={handleInputChange}
+                          className="h-4 w-4 rounded border-white/20 bg-transparent text-sky-500 focus:ring-sky-500"
+                        />
+                        Featured
+                      </label>
+                      <label className="flex items-center gap-2 text-sm text-white/70">
+                        <input
+                          type="checkbox"
+                          name="active"
+                          checked={formData.active !== undefined ? !!formData.active : true}
+                          onChange={handleInputChange}
+                          className="h-4 w-4 rounded border-white/20 bg-transparent text-sky-500 focus:ring-sky-500"
+                        />
+                        Active
+                      </label>
+                    </div>
+                    <input
+                      type="number"
+                      placeholder="Priority (0 = highest priority)"
+                      name="priority"
+                      value={formData.priority || 0}
+                      onChange={handleInputChange}
+                      className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white focus:border-sky-400 focus:outline-none"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Tags (comma separated)"
+                      name="tags"
+                      value={formData.tags || ''}
+                      onChange={handleInputChange}
+                      className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white focus:border-sky-400 focus:outline-none"
+                    />
+                    <input
+                      type="text"
+                      placeholder="Source (optional)"
+                      name="source"
+                      value={formData.source || ''}
+                      onChange={handleInputChange}
+                      className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white focus:border-sky-400 focus:outline-none"
+                    />
+                    <textarea
+                      placeholder="Context (optional)"
+                      name="context"
+                      value={formData.context || ''}
+                      onChange={handleInputChange}
+                      rows="2"
+                      className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white focus:border-sky-400 focus:outline-none"
+                    ></textarea>
+                  </div>
+                )}
+
                 {formError && <p className="text-sm text-rose-300">{formError}</p>}
 
                 <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:justify-end">
@@ -1278,7 +1519,7 @@ const AdminDashboard = () => {
                     disabled={submitting}
                     className={`inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-sky-500 to-cyan-500 px-6 py-2 text-sm font-semibold text-white shadow-lg shadow-sky-500/30 transition hover:from-sky-400 hover:to-cyan-400 ${submitting ? 'cursor-not-allowed opacity-60' : ''}`}
                   >
-                    {submitting ? 'Creating...' : 'Create'}
+                    {submitting ? (editMode ? 'Updating...' : 'Creating...') : (editMode ? 'Update' : 'Create')}
                   </button>
                   <button
                     type="button"

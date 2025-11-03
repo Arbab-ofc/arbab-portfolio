@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FiArrowRight, FiGithub, FiLinkedin, FiMail, FiDownload } from 'react-icons/fi';
 import { projectsAPI, skillsAPI } from '../utils/api';
-import QuoteCarousel from '../components/QuoteCarousel';
 
 const Home = () => {
   const [projects, setProjects] = useState([]);
@@ -598,36 +597,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Tech Quotes Section */}
-      <section className="py-20 bg-white dark:bg-gray-900 relative overflow-hidden">
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-10 left-10 w-32 h-32 border-4 border-blue-500 rounded-full animate-pulse"></div>
-          <div className="absolute bottom-10 right-10 w-24 h-24 border-4 border-purple-500 transform rotate-45 animate-spin" style={{ animationDuration: '20s' }}></div>
-          <div className="absolute top-1/2 left-1/4 w-16 h-16 border-4 border-pink-500 transform rotate-12 animate-bounce"></div>
-        </div>
-
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
-              Tech Inspiration
-            </h2>
-            <p className="text-gray-600 dark:text-gray-400">
-              Words that drive innovation
-            </p>
-          </motion.div>
-
-          <div className="relative h-32 flex items-center justify-center">
-            <QuoteCarousel />
-          </div>
-        </div>
-      </section>
-
+      
       {/* Modern CTA Section */}
       <section className="relative py-32 overflow-hidden">
         {/* Modern Background Pattern */}

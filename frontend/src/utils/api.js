@@ -97,6 +97,16 @@ export const testimonialsAPI = {
   create: (data) => api.post('/testimonials', data),
 };
 
+export const quotesAPI = {
+  getAll: (params) => api.get('/quotes', { params }),
+  getOne: (id) => api.get(`/quotes/${id}`),
+  create: (data) => api.post('/quotes', data),
+  update: (id, data) => api.put(`/quotes/${id}`, data),
+  delete: (id) => api.delete(`/quotes/${id}`),
+  getFeatured: (params) => api.get('/quotes/featured', { params }),
+  getStats: () => api.get('/quotes/stats'),
+};
+
 export const analyticsAPI = {
   getOverview: () => api.get('/analytics/overview'),
   getVisitors: () => api.get('/analytics/visitors'),

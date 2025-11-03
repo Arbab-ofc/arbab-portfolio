@@ -14,7 +14,8 @@
       "Bash(lsof:*)",
       "Bash(ps:*)",
       "Bash(node:*)",
-      "Bash(mongosh:*)"
+      "Bash(mongosh:*)",
+      "Bash(xargs kill:*)"
     ],
     "deny": [],
     "ask": []
