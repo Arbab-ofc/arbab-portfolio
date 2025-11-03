@@ -19,6 +19,7 @@ const Quotes = lazy(() => import('./pages/Quotes'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const AdminLogin = lazy(() => import('./pages/AdminLogin'));
 const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
+const ResumeManagement = lazy(() => import('./pages/ResumeManagement'));
 
 // Loading component
 const Loading = () => (
@@ -35,6 +36,7 @@ function App() {
           {/* Hidden Admin Routes */}
           <Route path="/admin-secret-login-portal" element={<AdminLogin />} />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/resume" element={<ResumeManagement />} />
 
           {/* Public Routes */}
           <Route path="/" element={<Layout />}>

@@ -112,4 +112,28 @@ export const analyticsAPI = {
   getVisitors: () => api.get('/analytics/visitors'),
 };
 
+export const resumeAPI = {
+  upload: (formData) => {
+    const formDataWithFile = new FormData();
+    Object.keys(formData).forEach(key => {
+      if (key !== 'resume') {
+        formDataWithFile.append(key, formData[key]);
+      }
+    });
+    formDataWithFile.append('resume', formData.resume);
+
+    return api.post('/resume/upload', formDataWithFile, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+  },
+  getAll: (params) => api.get('/resume', { params }),
+  getOne: (id) => api.get(`/resume/${id}`),
+  getActive: () => api.get('/resume/active'),
+  update: (id, data) => api.put(`/resume/${id}`, data),
+  delete: (id) => api.delete(`/resume/${id}`),
+  toggleStatus: (id) => api.patch(`/resume/${id}/toggle`),
+};
+
 export default api;

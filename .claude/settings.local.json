@@ -15,7 +15,8 @@
       "Bash(ps:*)",
       "Bash(node:*)",
       "Bash(mongosh:*)",
-      "Bash(xargs kill:*)"
+      "Bash(xargs kill:*)",
+      "Bash(tree:*)"
     ],
     "deny": [],
     "ask": []

@@ -1,4 +1,5 @@
 import { v2 as cloudinary } from 'cloudinary';
+import { CloudinaryStorage } from 'multer-storage-cloudinary';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -43,5 +44,17 @@ export const deleteFromCloudinary = async (publicId) => {
     throw new Error('Failed to delete image from Cloudinary');
   }
 };
+
+// Configure Cloudinary storage for resume uploads (PDF files)
+export const resumeStorage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: 'portfolio/resumes',
+    allowed_formats: ['pdf'],
+    public_id: (req, file) => `resume_${Date.now()}`,
+    resource_type: 'raw', // For PDF files
+    format: 'pdf',
+  },
+});
 
 export default cloudinary;

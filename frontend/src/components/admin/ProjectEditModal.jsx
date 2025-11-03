@@ -284,8 +284,8 @@ const ProjectEditModal = ({ isOpen, onClose, project, onSave, isLoading = false 
       />
 
       {/* Modal Container */}
-      <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-3 sm:p-4 pointer-events-none">
-        <div className="relative w-full max-w-3xl xl:max-w-4xl transform transition-all duration-300 pointer-events-auto">
+      <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-2 xs:p-3 sm:p-4 pointer-events-none">
+        <div className="relative w-full max-w-3xl xl:max-w-4xl transform transition-all duration-300 pointer-events-auto mx-2 xs:mx-0">
           {/* Modal Content */}
           <div className="relative bg-slate-900 border border-white/10 rounded-2xl shadow-2xl backdrop-blur-xl overflow-hidden pointer-events-auto">
             {/* Header */}
@@ -330,56 +330,59 @@ const ProjectEditModal = ({ isOpen, onClose, project, onSave, isLoading = false 
 
             {/* Footer */}
             <div className="px-3 py-3 sm:px-4 sm:py-4 bg-slate-900/50 border-t border-white/10">
-              <div className="flex items-center justify-between">
-                <div>
+              <div className="flex flex-col gap-3 xs:flex-row xs:items-center xs:justify-between">
+                <div className="order-2 xs:order-1">
                   {errors.submit && (
-                    <p className="text-sm text-red-400 flex items-center gap-2">
+                    <p className="text-sm text-rose-400 flex items-center gap-2">
                       <span>⚠️</span> {errors.submit}
                     </p>
                   )}
                 </div>
 
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 xs:gap-3 order-1 xs:order-2">
                   {/* Previous Button */}
                   <button
                     onClick={handlePrevious}
                     disabled={currentStep === 1 || isSubmitting}
                     className={`
-                      px-4 py-2 rounded-xl font-medium transition-all duration-300 flex items-center gap-2
+                      px-3 xs:px-4 py-2 rounded-xl font-medium transition-all duration-300 flex items-center gap-1 xs:gap-2 text-xs xs:text-sm
                       ${currentStep === 1 || isSubmitting
                         ? 'bg-white/5 border border-white/10 text-white/30 cursor-not-allowed'
                         : 'bg-white/10 border border-white/20 text-white/70 hover:bg-white/20 hover:text-white'
                       }
                     `}
                   >
-                    <ArrowLeftIcon className="h-4 w-4" />
-                    Previous
+                    <ArrowLeftIcon className="h-3 w-3 xs:h-4 xs:w-4" />
+                    <span className="hidden xs:inline">Previous</span>
+                    <span className="xs:hidden">Prev</span>
                   </button>
 
                   {/* Next/Submit Button */}
                   {currentStep < totalSteps ? (
                     <button
                       onClick={handleNext}
-                      className="px-6 py-2 bg-gradient-to-r from-sky-500 to-cyan-400 text-white rounded-xl font-medium hover:from-sky-600 hover:to-cyan-500 transition-all duration-300 flex items-center gap-2 shadow-lg shadow-sky-500/25"
+                      className="px-4 xs:px-6 py-2 bg-gradient-to-r from-sky-500 to-cyan-400 text-white rounded-xl font-medium hover:from-sky-600 hover:to-cyan-500 transition-all duration-300 flex items-center gap-1 xs:gap-2 shadow-lg shadow-sky-500/25 text-xs xs:text-sm"
                     >
                       Next
-                      <ArrowRightIcon className="h-4 w-4" />
+                      <ArrowRightIcon className="h-3 w-3 xs:h-4 xs:w-4" />
                     </button>
                   ) : (
                     <button
                       onClick={handleSubmit}
                       disabled={isSubmitting || isLoading}
-                      className="px-6 py-2 bg-gradient-to-r from-green-500 to-emerald-400 text-white rounded-xl font-medium hover:from-green-600 hover:to-emerald-500 transition-all duration-300 flex items-center gap-2 shadow-lg shadow-green-500/25 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="px-4 xs:px-6 py-2 bg-gradient-to-r from-green-500 to-emerald-400 text-white rounded-xl font-medium hover:from-green-600 hover:to-emerald-500 transition-all duration-300 flex items-center gap-1 xs:gap-2 shadow-lg shadow-green-500/25 disabled:opacity-50 disabled:cursor-not-allowed text-xs xs:text-sm"
                     >
                       {isSubmitting || isLoading ? (
                         <>
-                          <div className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                          Saving...
+                          <div className="h-3 w-3 xs:h-4 xs:w-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                          <span className="hidden xs:inline">Saving...</span>
+                          <span className="xs:hidden">...</span>
                         </>
                       ) : (
                         <>
-                          <CheckIcon className="h-4 w-4" />
-                          {project ? 'Update Project' : 'Create Project'}
+                          <CheckIcon className="h-3 w-3 xs:h-4 xs:w-4" />
+                          <span className="hidden xs:inline">{project ? 'Update Project' : 'Create Project'}</span>
+                          <span className="xs:hidden">{project ? 'Update' : 'Create'}</span>
                         </>
                       )}
                     </button>

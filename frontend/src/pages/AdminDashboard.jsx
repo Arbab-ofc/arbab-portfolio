@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { analyticsAPI, projectsAPI, blogsAPI, contactAPI, skillsAPI, experienceAPI, quotesAPI } from '../utils/api';
+import { analyticsAPI, projectsAPI, blogsAPI, contactAPI, skillsAPI, experienceAPI, quotesAPI, resumeAPI } from '../utils/api';
 import ProjectEditModal from '../components/admin/ProjectEditModal';
+import ResumeUpload from '../components/admin/ResumeUpload'; // Fixed HiDocument import
 import {
   HiViewGrid,
   HiChartBar,
@@ -16,6 +17,7 @@ import {
   HiCloudUpload,
   HiPaperAirplane,
   HiDatabase,
+  HiDocument,
   HiPlus,
   HiSparkles,
   HiPencil,
@@ -31,6 +33,7 @@ const AdminDashboard = () => {
   const [skills, setSkills] = useState([]);
   const [experiences, setExperiences] = useState([]);
   const [quotes, setQuotes] = useState([]);
+  const [resumes, setResumes] = useState([]);
   const [editMode, setEditMode] = useState(false);
   const [editItem, setEditItem] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -220,6 +223,7 @@ const AdminDashboard = () => {
   { id: 'analytics', label: 'Analytics', icon: HiChartBar },
   { id: 'content', label: 'Content', icon: HiClipboardList },
   { id: 'messages', label: 'Messages', icon: HiChatAlt2 },
+  { id: 'resume', label: 'Resume', icon: HiDocument },
   { id: 'manage', label: 'Manage', icon: HiCog },
   ];
 
@@ -230,14 +234,15 @@ const AdminDashboard = () => {
   const fetchDashboardData = async () => {
     try {
       setLoading(true);
-      const [analyticsRes, projectsRes, blogsRes, contactsRes, skillsRes, experienceRes, quotesRes] = await Promise.all([
+      const [analyticsRes, projectsRes, blogsRes, contactsRes, skillsRes, experienceRes, quotesRes, resumesRes] = await Promise.all([
         fetchWithRetry(() => analyticsAPI.getOverview()).catch(() => ({ data: { totalVisits: 0, uniqueVisitors: 0, deviceStats: [], topPages: [] } })),
         fetchWithRetry(() => projectsAPI.getAll()),
         fetchWithRetry(() => blogsAPI.getAll()),
         fetchWithRetry(() => contactAPI.getAll()),
         fetchWithRetry(() => skillsAPI.getAll()),
         fetchWithRetry(() => experienceAPI.getAll()),
-        fetchWithRetry(() => quotesAPI.getAll())
+        fetchWithRetry(() => quotesAPI.getAll()),
+        fetchWithRetry(() => resumeAPI.getAll()).catch(() => ({ data: { data: [] } })) // Resume API might fail initially
       ]);
 
       setAnalytics(analyticsRes.data);
@@ -250,6 +255,7 @@ const AdminDashboard = () => {
       setSkills(flatSkills);
       setExperiences(sortExperiencesList(experienceRes.data?.data || []));
       setQuotes(quotesRes.data?.data || []);
+      setResumes(resumesRes.data?.data || []);
     } catch (err) {
       const message =
         err?.response?.status === 429
@@ -877,6 +883,17 @@ const AdminDashboard = () => {
     </section>
   );
 
+  const ResumeSection = () => (
+    <section className="space-y-6">
+      <div>
+        <h2 className="text-2xl font-semibold text-white">Resume Management</h2>
+        <p className="text-sm text-white/60">Upload and manage your resume PDFs.</p>
+      </div>
+
+      <ResumeUpload resumes={resumes} onRefresh={fetchDashboardData} />
+    </section>
+  );
+
   const ManageSection = () => (
     <section className="space-y-6">
       <div>
@@ -884,8 +901,8 @@ const AdminDashboard = () => {
         <p className="text-sm text-white/60">Create, curate, and refine portfolio entities.</p>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
-        <div className="rounded-3xl border border-white/10 bg-white/10 p-6 backdrop-blur-xl shadow-lg">
+      <div className="grid gap-4 xs:gap-5 sm:gap-6 xs:grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
+        <div className="rounded-3xl border border-white/10 bg-white/10 p-4 xs:p-5 sm:p-6 backdrop-blur-xl shadow-lg">
           <div className="flex items-center justify-between">
             <h3 className="text-lg font-semibold text-white">Skills</h3>
             <button
@@ -901,16 +918,16 @@ const AdminDashboard = () => {
           </div>
           <div className="mt-6 space-y-3">
             {skills.slice(0, 5).map(skill => (
-              <div key={skill._id} className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
-                <span className="text-sm text-white/80">{skill.name}</span>
-                <button className="text-xs text-sky-200 transition hover:text-sky-100">Manage</button>
+              <div key={skill._id} className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-3 xs:px-4 py-3">
+                <span className="text-sm text-white/80 truncate flex-1 mr-3">{skill.name}</span>
+                <button className="text-xs text-sky-200 transition hover:text-sky-100 flex-shrink-0 px-2 py-1 rounded-lg hover:bg-sky-500/10">Manage</button>
               </div>
             ))}
             {skills.length === 0 && <p className="text-xs text-white/60">No skills yet.</p>}
           </div>
         </div>
 
-        <div className="rounded-3xl border border-white/10 bg-white/10 p-6 backdrop-blur-xl shadow-lg">
+        <div className="rounded-3xl border border-white/10 bg-white/10 p-4 xs:p-5 sm:p-6 backdrop-blur-xl shadow-lg">
           <div className="flex items-center justify-between">
             <h3 className="text-lg font-semibold text-white">Experience</h3>
             <button
@@ -926,17 +943,17 @@ const AdminDashboard = () => {
           </div>
           <div className="mt-6 space-y-3">
             {experiences.slice(0, 3).map(exp => (
-              <div key={exp._id} className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <p className="text-sm font-semibold text-white/80">{exp.position}</p>
-                    <p className="text-xs text-white/50">{exp.company}</p>
+              <div key={exp._id} className="rounded-2xl border border-white/10 bg-white/5 p-3 xs:p-4">
+                <div className="flex flex-col gap-2 xs:flex-row xs:items-start xs:justify-between">
+                  <div className="min-w-0 flex-1">
+                    <p className="text-sm font-semibold text-white/80 truncate">{exp.position}</p>
+                    <p className="text-xs text-white/50 truncate">{exp.company}</p>
                   </div>
-                  <span className="text-xs text-white/50">{formatExperienceRange(exp.startDate, exp.endDate, exp.current)}</span>
+                  <span className="text-xs text-white/50 whitespace-nowrap xs:ml-2">{formatExperienceRange(exp.startDate, exp.endDate, exp.current)}</span>
                 </div>
-                <div className="mt-2 flex items-center justify-between text-xs text-white/50">
-                  <span>{calculateExperienceDuration(exp.startDate, exp.endDate, exp.current)}</span>
-                  <span>{exp.location || 'Remote'}</span>
+                <div className="mt-2 flex flex-col gap-1 xs:flex-row xs:items-center xs:justify-between text-xs text-white/50">
+                  <span className="truncate">{calculateExperienceDuration(exp.startDate, exp.endDate, exp.current)}</span>
+                  <span className="truncate">{exp.location || 'Remote'}</span>
                 </div>
               </div>
             ))}
@@ -944,7 +961,7 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        <div className="rounded-3xl border border-white/10 bg-white/10 p-6 backdrop-blur-xl shadow-lg">
+        <div className="rounded-3xl border border-white/10 bg-white/10 p-4 xs:p-5 sm:p-6 backdrop-blur-xl shadow-lg">
           <div className="flex items-center justify-between">
             <h3 className="text-lg font-semibold text-white">Quotes</h3>
             <button
@@ -960,12 +977,12 @@ const AdminDashboard = () => {
           </div>
           <div className="mt-6 space-y-3">
             {quotes.slice(0, 5).map(quote => (
-              <div key={quote._id} className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+              <div key={quote._id} className="flex items-start justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 p-3 xs:p-4">
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-semibold text-white/80">"{quote.text}"</p>
-                  <p className="text-xs text-white/50">- {quote.author}</p>
+                  <p className="text-sm font-semibold text-white/80 line-clamp-2">"{quote.text}"</p>
+                  <p className="text-xs text-white/50 truncate mt-1">- {quote.author}</p>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 xs:gap-3 flex-shrink-0">
                   <button
                     onClick={() => {
                       setEditItem(quote);
@@ -973,17 +990,17 @@ const AdminDashboard = () => {
                       setCreateType('quote');
                       setShowCreateModal(true);
                     }}
-                    className="rounded-full border border-sky-400/40 bg-sky-500/15 p-2 text-sky-200 transition hover:border-sky-300/60 hover:bg-sky-500/25"
+                    className="rounded-full border border-sky-400/40 bg-sky-500/15 p-2.5 text-sky-200 transition hover:border-sky-300/60 hover:bg-sky-500/25"
                     title="Edit quote"
                   >
-                    <HiPencil className="h-3 w-3" />
+                    <HiPencil className="h-4 w-4" />
                   </button>
                   <button
                     onClick={() => handleDeleteQuote(quote._id)}
-                    className="rounded-full border border-red-400/40 bg-red-500/15 p-2 text-red-200 transition hover:border-red-300/60 hover:bg-red-500/25"
+                    className="rounded-full border border-red-400/40 bg-red-500/15 p-2.5 text-red-200 transition hover:border-red-300/60 hover:bg-red-500/25"
                     title="Delete quote"
                   >
-                    <HiTrash className="h-3 w-3" />
+                    <HiTrash className="h-4 w-4" />
                   </button>
                 </div>
               </div>
@@ -995,7 +1012,7 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        <div className="rounded-3xl border border-white/10 bg-white/10 p-6 backdrop-blur-xl shadow-lg">
+        <div className="rounded-3xl border border-white/10 bg-white/10 p-4 xs:p-5 sm:p-6 backdrop-blur-xl shadow-lg">
           <h3 className="text-lg font-semibold text-white">Quick Actions</h3>
           <div className="mt-6 space-y-3">
             {[
@@ -1007,13 +1024,13 @@ const AdminDashboard = () => {
               return (
                 <button
                   key={action.label}
-                  className="flex w-full items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-left text-sm text-white/80 transition hover:border-white/20 hover:bg-white/10"
+                  className="flex w-full items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-3 xs:px-4 py-3 xs:py-4 text-left text-sm text-white/80 transition hover:border-white/20 hover:bg-white/10"
                 >
                   <span className="flex items-center gap-3">
-                    <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-white/70">
-                      <Icon className="text-base" />
+                    <span className="flex h-10 w-10 xs:h-11 xs:w-11 items-center justify-center rounded-xl bg-white/10 text-white/70">
+                      <Icon className="text-base xs:text-lg" />
                     </span>
-                    {action.label}
+                    <span className="text-sm xs:text-base">{action.label}</span>
                   </span>
                   <span className="text-xs text-white/50">{action.hint}</span>
                 </button>
@@ -1033,6 +1050,8 @@ const AdminDashboard = () => {
         return <ContentSection />;
       case 'messages':
         return <MessagesSection />;
+      case 'resume':
+        return <ResumeSection />;
       case 'manage':
         return <ManageSection />;
       case 'overview':
@@ -1082,7 +1101,7 @@ const AdminDashboard = () => {
 
         {/* Navigation Tabs */}
         <div className="mt-10">
-          <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-5">
+          <div className="grid gap-3 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
             {tabs.map(tab => {
               const TabIcon = tab.icon;
               const isActive = activeTab === tab.id;
