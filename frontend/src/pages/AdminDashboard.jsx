@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { analyticsAPI, projectsAPI, blogsAPI, contactAPI, skillsAPI, experienceAPI } from '../utils/api';
+import ProjectEditModal from '../components/admin/ProjectEditModal';
 import {
   HiViewGrid,
   HiChartBar,
@@ -17,6 +18,8 @@ import {
   HiDatabase,
   HiPlus,
   HiSparkles,
+  HiPencil,
+  HiTrash,
 } from 'react-icons/hi';
 
 const AdminDashboard = () => {
@@ -38,6 +41,11 @@ const AdminDashboard = () => {
   const [formError, setFormError] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [slugManuallyEdited, setSlugManuallyEdited] = useState(false);
+
+  // Project management state
+  const [showProjectModal, setShowProjectModal] = useState(false);
+  const [editingProject, setEditingProject] = useState(null);
+  const [projectSubmitting, setProjectSubmitting] = useState(false);
 
   const experienceTypes = ['Full-time', 'Part-time', 'Freelance', 'Contract', 'Internship'];
   const blogCategories = ['Tutorial', 'Best Practices', 'Case Study', 'Tech Review', 'Career', 'Other'];
@@ -411,6 +419,50 @@ const AdminDashboard = () => {
     navigate('/admin-secret-login-portal');
   };
 
+  // Project management functions
+  const handleEditProject = (project) => {
+    setEditingProject(project);
+    setShowProjectModal(true);
+  };
+
+  const handleDeleteProject = async (projectId) => {
+    if (!window.confirm('Are you sure you want to delete this project? This action cannot be undone.')) {
+      return;
+    }
+
+    try {
+      await projectsAPI.delete(projectId);
+      setProjects(prev => prev.filter(p => p._id !== projectId));
+      // You could add a success toast notification here
+    } catch (error) {
+      console.error('Error deleting project:', error);
+      alert('Failed to delete project. Please try again.');
+    }
+  };
+
+  const handleProjectSave = async (projectData) => {
+    setProjectSubmitting(true);
+    try {
+      if (editingProject) {
+        // Update existing project
+        const response = await projectsAPI.update(editingProject._id, projectData);
+        setProjects(prev => prev.map(p => p._id === editingProject._id ? response.data.data : p));
+      } else {
+        // Create new project
+        const response = await projectsAPI.create(projectData);
+        setProjects(prev => [response.data.data, ...prev]);
+      }
+      setShowProjectModal(false);
+      setEditingProject(null);
+      alert('Project saved successfully!');
+    } catch (error) {
+      console.error('Error saving project:', error);
+      alert(`Failed to save project. ${error.response?.data?.message || error.response?.data?.error || error.message || 'Please try again.'}`);
+    } finally {
+      setProjectSubmitting(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-slate-950 text-white">
@@ -635,16 +687,46 @@ const AdminDashboard = () => {
         <div className="rounded-3xl border border-white/10 bg-white/10 p-6 sm:p-8 backdrop-blur-xl shadow-lg">
           <div className="flex items-center justify-between">
             <h3 className="text-lg font-semibold text-white">Projects</h3>
-            <span className="text-xs text-white/60">{projects.length} total</span>
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => {
+                  setEditingProject(null);
+                  setShowProjectModal(true);
+                }}
+                className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold text-white/80 transition hover:border-white/30 hover:bg-white/10"
+              >
+                <HiPlus className="text-sm" />
+                Add Project
+              </button>
+              <span className="text-xs text-white/60">{projects.length} total</span>
+            </div>
           </div>
           <div className="mt-6 space-y-3">
             {projects.slice(0, 5).map(project => (
               <div key={project._id} className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
-                <div className="min-w-0">
+                <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-semibold text-white/80">{project.title}</p>
                   <p className="text-xs text-white/50">{project.category}</p>
                 </div>
-                <HiBriefcase className="text-lg text-white/40" />
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => {
+                      setEditingProject(project);
+                      setShowProjectModal(true);
+                    }}
+                    className="rounded-full border border-sky-400/40 bg-sky-500/15 p-2 text-sky-200 transition hover:border-sky-300/60 hover:bg-sky-500/25"
+                    title="Edit project"
+                  >
+                    <HiPencil className="h-3 w-3" />
+                  </button>
+                  <button
+                    onClick={() => handleDeleteProject(project._id)}
+                    className="rounded-full border border-red-400/40 bg-red-500/15 p-2 text-red-200 transition hover:border-red-300/60 hover:bg-red-500/25"
+                    title="Delete project"
+                  >
+                    <HiTrash className="h-3 w-3" />
+                  </button>
+                </div>
               </div>
             ))}
             {projects.length > 5 && (
@@ -1211,6 +1293,18 @@ const AdminDashboard = () => {
           </div>
         </div>
       )}
+
+      {/* Project Edit Modal */}
+      <ProjectEditModal
+        isOpen={showProjectModal}
+        onClose={() => {
+          setShowProjectModal(false);
+          setEditingProject(null);
+        }}
+        project={editingProject}
+        onSave={handleProjectSave}
+        isLoading={projectSubmitting}
+      />
     </div>
   );
 };

@@ -22,8 +22,8 @@ router.get('/:slug', getProject);
 router.post('/:id/like', likeProject);
 
 // Admin routes
-router.post('/', protect, adminOnly, uploadMultiple, createProject);
-router.put('/:id', protect, adminOnly, uploadMultiple, updateProject);
+router.post('/', protect, adminOnly, createProject);
+router.put('/:id', protect, adminOnly, updateProject);
 router.delete('/:id', protect, adminOnly, deleteProject);
 
 export default router;

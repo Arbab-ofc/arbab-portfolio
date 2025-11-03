@@ -93,21 +93,8 @@ export const getProject = async (req, res) => {
 // @access  Private/Admin
 export const createProject = async (req, res) => {
   try {
-    // Handle image uploads if present
-    if (req.files && req.files.length > 0) {
-      const uploadedImages = [];
-      
-      for (const file of req.files) {
-        const result = await uploadToCloudinary(file, 'portfolio/projects');
-        uploadedImages.push({
-          url: result.url,
-          publicId: result.publicId,
-          type: 'screenshot',
-        });
-      }
-      
-      req.body.images = uploadedImages;
-    }
+    // Images are already uploaded to Cloudinary and sent in req.body.images
+    // No need to handle file uploads here since frontend handles Cloudinary directly
 
     const project = await Project.create(req.body);
 
@@ -139,21 +126,8 @@ export const updateProject = async (req, res) => {
       });
     }
 
-    // Handle new image uploads
-    if (req.files && req.files.length > 0) {
-      const uploadedImages = [];
-      
-      for (const file of req.files) {
-        const result = await uploadToCloudinary(file, 'portfolio/projects');
-        uploadedImages.push({
-          url: result.url,
-          publicId: result.publicId,
-          type: 'screenshot',
-        });
-      }
-      
-      req.body.images = [...(project.images || []), ...uploadedImages];
-    }
+    // Images are already uploaded to Cloudinary and sent in req.body.images
+    // No need to handle file uploads here since frontend handles Cloudinary directly
 
     project = await Project.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
