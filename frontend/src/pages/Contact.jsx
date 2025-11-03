@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { FiMail, FiPhone, FiMapPin, FiSend, FiGithub, FiLinkedin } from 'react-icons/fi';
+import { FiMail, FiPhone, FiMapPin, FiSend, FiGithub, FiLinkedin, FiUser, FiMessageSquare } from 'react-icons/fi';
 import { contactAPI } from '../utils/api';
 
 const Contact = () => {
@@ -73,7 +73,7 @@ const Contact = () => {
       icon: FiGithub,
       label: 'GitHub',
       url: 'https://github.com/Arbab-ofc',
-      color: 'hover:text-gray-900 dark:hover:text-white',
+      color: 'hover:text-gray-900',
     },
     {
       icon: FiLinkedin,
@@ -84,18 +84,81 @@ const Contact = () => {
   ];
 
   return (
-    <div className="min-h-screen py-20 bg-gray-50 dark:bg-gray-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
+    <div className="min-h-screen py-24 relative overflow-hidden">
+      {/* Clean White Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-white via-amber-50/30 to-yellow-50/40"></div>
+
+      {/* Subtle Accents */}
+      <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-amber-100/30 via-yellow-100/20 to-transparent rounded-full filter blur-3xl animate-pulse"></div>
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-yellow-100/30 via-amber-100/20 to-transparent rounded-full filter blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+
+      {/* Luxury Pattern */}
+      <div className="absolute inset-0 opacity-3">
+        <div className="h-full w-full" style={{
+          backgroundImage: `
+            linear-gradient(45deg, #F59E0B 1px, transparent 1px),
+            linear-gradient(-45deg, #F59E0B 1px, transparent 1px),
+            linear-gradient(45deg, #D97706 1px, transparent 1px),
+            linear-gradient(-45deg, #D97706 1px, transparent 1px)
+          `,
+          backgroundSize: '120px 120px',
+          backgroundPosition: '0 0, 0 60px, 60px 0, 60px 60px'
+        }}></div>
+      </div>
+
+      {/* Subtle Grid */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="h-full w-full" style={{
+          backgroundImage: `
+            linear-gradient(to right, #F59E0B 1px, transparent 1px),
+            linear-gradient(to bottom, #F59E0B 1px, transparent 1px)
+          `,
+          backgroundSize: '100px 100px'
+        }}></div>
+      </div>
+
+      {/* Elegant Particles */}
+      <div className="absolute inset-0">
+        {[...Array(10)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-2 h-2 bg-amber-300/40 rounded-full animate-pulse"
+            style={{
+              left: `${Math.random() * 95}%`,
+              top: `${Math.random() * 95}%`,
+              animationDelay: `${Math.random() * 4}s`,
+              opacity: Math.random() * 0.3 + 0.1
+            }}
+          ></div>
+        ))}
+      </div>
+
+      {/* Corner Decorations */}
+      <div className="absolute top-10 right-10 w-20 h-20 border-4 border-amber-200/30 rounded-tr-full animate-pulse"></div>
+      <div className="absolute bottom-10 left-10 w-24 h-24 border-4 border-amber-200/30 rounded-bl-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h1 className="text-5xl font-bold text-gray-900 dark:text-white mb-4">
+          {/* Luxury Badge */}
+          <div className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-amber-500 to-yellow-500 text-white rounded-full text-sm font-semibold mb-6 shadow-xl border border-amber-400/30">
+            <div className="w-2 h-2 bg-white rounded-full animate-pulse"></div>
             Get In Touch
+          </div>
+
+          <h1 className="text-5xl md:text-6xl font-bold mb-6">
+            <span className="bg-gradient-to-r from-amber-600 via-yellow-600 to-amber-700 bg-clip-text text-transparent">
+              Let's Connect
+            </span>
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+
+          <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
             Have a project in mind or want to collaborate? Feel free to reach out!
           </p>
         </motion.div>
@@ -103,105 +166,160 @@ const Contact = () => {
         <div className="grid lg:grid-cols-3 gap-8">
           {/* Contact Info */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.1 }}
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1, duration: 0.8 }}
             className="lg:col-span-1 space-y-6"
           >
             {/* Contact Cards */}
             {contactInfo.map((info, index) => (
               <motion.div
                 key={info.label}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true }}
                 transition={{ delay: 0.2 + index * 0.1 }}
-                className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg"
+                whileHover={{
+                  y: -4,
+                  scale: 1.02,
+                  transition: { duration: 0.3 }
+                }}
+                className="group"
               >
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <info.icon className="text-blue-600 dark:text-blue-400" size={24} />
+                <div className="relative h-full bg-white border border-amber-200/50 rounded-2xl p-6 shadow-lg hover:shadow-xl hover:shadow-amber-200/20 transition-all duration-500">
+                  {/* Hover Effects */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-amber-50/20 via-transparent to-yellow-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
+
+                  {/* Corner Accent */}
+                  <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-amber-200/30 via-yellow-100/20 to-transparent rounded-tr-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                  <div className="relative">
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-yellow-500 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <info.icon className="text-white" size={24} />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-gray-900 group-hover:text-amber-600 transition-colors duration-300 mb-1">
+                          {info.label}
+                        </h3>
+                        {info.link ? (
+                          <a
+                            href={info.link}
+                            className="text-gray-700 hover:text-amber-600 transition-colors duration-300"
+                          >
+                            {info.value}
+                          </a>
+                        ) : (
+                          <p className="text-gray-700">{info.value}</p>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900 dark:text-white mb-1">
-                      {info.label}
-                    </h3>
-                    {info.link ? (
-                      <a
-                        href={info.link}
-                        className="text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                      >
-                        {info.value}
-                      </a>
-                    ) : (
-                      <p className="text-gray-600 dark:text-gray-400">{info.value}</p>
-                    )}
-                  </div>
+
+                  {/* Hover Shine Effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-100/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 rounded-2xl"></div>
                 </div>
               </motion.div>
             ))}
 
             {/* Social Links */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 20, scale: 0.95 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true }}
               transition={{ delay: 0.5 }}
-              className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg"
+              whileHover={{
+                y: -4,
+                scale: 1.02,
+                transition: { duration: 0.3 }
+              }}
+              className="group"
             >
-              <h3 className="font-semibold text-gray-900 dark:text-white mb-4">
-                Connect With Me
-              </h3>
-              <div className="flex gap-4">
-                {socialLinks.map((social) => (
-                  <a
-                    key={social.label}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`w-12 h-12 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center text-gray-600 dark:text-gray-400 ${social.color} transition-all hover:scale-110`}
-                    aria-label={social.label}
-                  >
-                    <social.icon size={20} />
-                  </a>
-                ))}
+              <div className="relative h-full bg-white border border-amber-200/50 rounded-2xl p-6 shadow-lg hover:shadow-xl hover:shadow-amber-200/20 transition-all duration-500">
+                {/* Hover Effects */}
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-50/20 via-transparent to-yellow-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
+
+                <div className="relative">
+                  <h3 className="font-bold text-gray-900 group-hover:text-amber-600 transition-colors duration-300 mb-4">
+                    Connect With Me
+                  </h3>
+                  <div className="flex gap-4">
+                    {socialLinks.map((social) => (
+                      <a
+                        key={social.label}
+                        href={social.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={`w-12 h-12 bg-gradient-to-br from-amber-100 to-yellow-100 rounded-xl flex items-center justify-center text-amber-700 border border-amber-300/50 ${social.color} transition-all hover:scale-110`}
+                        aria-label={social.label}
+                      >
+                        <social.icon size={20} />
+                      </a>
+                    ))}
+                  </div>
+                </div>
               </div>
             </motion.div>
 
             {/* Availability */}
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 20, scale: 0.95 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true }}
               transition={{ delay: 0.6 }}
-              className="bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 rounded-xl p-6"
+              whileHover={{
+                y: -4,
+                scale: 1.02,
+                transition: { duration: 0.3 }
+              }}
+              className="group"
             >
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                <h3 className="font-semibold text-gray-900 dark:text-white">
-                  Available for Work
-                </h3>
+              <div className="relative h-full bg-gradient-to-br from-amber-50 to-yellow-50 border border-amber-200/50 rounded-2xl p-6 shadow-lg hover:shadow-xl hover:shadow-amber-200/20 transition-all duration-500">
+                {/* Hover Effects */}
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-50/20 via-transparent to-yellow-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
+
+                <div className="relative">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-4 h-4 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full animate-pulse shadow-lg"></div>
+                    <h3 className="font-bold text-gray-900 group-hover:text-amber-600 transition-colors duration-300">
+                      Available for Work
+                    </h3>
+                  </div>
+                  <p className="text-sm text-gray-700 leading-relaxed">
+                    I'm currently available for freelance projects and full-time opportunities.
+                  </p>
+                </div>
+
+                {/* Hover Shine Effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-100/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 rounded-2xl"></div>
               </div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                I'm currently available for freelance projects and full-time opportunities.
-              </p>
             </motion.div>
           </motion.div>
 
           {/* Contact Form */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2, duration: 0.8 }}
             className="lg:col-span-2"
           >
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-                Send Me a Message
-              </h2>
+            <div className="bg-white border border-amber-200/50 rounded-3xl p-8 shadow-xl">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="p-2 bg-gradient-to-br from-amber-100 to-yellow-100 rounded-lg">
+                  <FiMessageSquare className="text-amber-600" />
+                </div>
+                <h2 className="text-2xl font-bold text-gray-900">
+                  Send Me a Message
+                </h2>
+              </div>
 
               {success && (
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="mb-6 p-4 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-lg"
+                  className="mb-6 p-4 bg-gradient-to-r from-green-100 to-emerald-100 border border-green-300/50 text-green-700 rounded-xl"
                 >
                   Thank you for your message! I'll get back to you soon.
                 </motion.div>
@@ -211,7 +329,7 @@ const Contact = () => {
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="mb-6 p-4 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 rounded-lg"
+                  className="mb-6 p-4 bg-gradient-to-r from-red-100 to-pink-100 border border-red-300/50 text-red-700 rounded-xl"
                 >
                   {error}
                 </motion.div>
@@ -220,7 +338,7 @@ const Contact = () => {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
                       Name *
                     </label>
                     <input
@@ -229,12 +347,12 @@ const Contact = () => {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 dark:text-white"
+                      className="w-full px-4 py-3 bg-gradient-to-br from-amber-50 to-yellow-50 border border-amber-200/50 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-300 text-gray-900 placeholder-gray-500"
                       placeholder="Your name"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
                       Email *
                     </label>
                     <input
@@ -243,7 +361,7 @@ const Contact = () => {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 dark:text-white"
+                      className="w-full px-4 py-3 bg-gradient-to-br from-amber-50 to-yellow-50 border border-amber-200/50 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-300 text-gray-900 placeholder-gray-500"
                       placeholder="your.email@example.com"
                     />
                   </div>
@@ -251,7 +369,7 @@ const Contact = () => {
 
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
                       Phone
                     </label>
                     <input
@@ -259,12 +377,12 @@ const Contact = () => {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 dark:text-white"
+                      className="w-full px-4 py-3 bg-gradient-to-br from-amber-50 to-yellow-50 border border-amber-200/50 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-300 text-gray-900 placeholder-gray-500"
                       placeholder="+91 1234567890"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
                       Company
                     </label>
                     <input
@@ -272,14 +390,14 @@ const Contact = () => {
                       name="company"
                       value={formData.company}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 dark:text-white"
+                      className="w-full px-4 py-3 bg-gradient-to-br from-amber-50 to-yellow-50 border border-amber-200/50 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-300 text-gray-900 placeholder-gray-500"
                       placeholder="Your company"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
                     Subject *
                   </label>
                   <input
@@ -288,13 +406,13 @@ const Contact = () => {
                     value={formData.subject}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 dark:text-white"
+                    className="w-full px-4 py-3 bg-gradient-to-br from-amber-50 to-yellow-50 border border-amber-200/50 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-300 text-gray-900 placeholder-gray-500"
                     placeholder="What's this about?"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
                     Message *
                   </label>
                   <textarea
@@ -303,7 +421,7 @@ const Contact = () => {
                     onChange={handleChange}
                     required
                     rows="6"
-                    className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 dark:text-white resize-none"
+                    className="w-full px-4 py-3 bg-gradient-to-br from-amber-50 to-yellow-50 border border-amber-200/50 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-300 text-gray-900 placeholder-gray-500 resize-none"
                     placeholder="Tell me about your project or inquiry..."
                   ></textarea>
                 </div>
@@ -311,7 +429,7 @@ const Contact = () => {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full px-8 py-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 font-medium"
+                  className="w-full px-8 py-4 bg-gradient-to-r from-amber-500 to-yellow-500 text-white rounded-xl hover:from-amber-600 hover:to-yellow-600 transition-all shadow-lg hover:shadow-amber-500/30 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 font-bold text-lg"
                 >
                   {loading ? (
                     <>

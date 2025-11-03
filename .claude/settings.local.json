@@ -12,7 +12,9 @@
       "Bash(pkill:*)",
       "WebFetch(domain:localhost)",
       "Bash(lsof:*)",
-      "Bash(ps:*)"
+      "Bash(ps:*)",
+      "Bash(node:*)",
+      "Bash(mongosh:*)"
     ],
     "deny": [],
     "ask": []
