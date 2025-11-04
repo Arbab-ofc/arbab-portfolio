@@ -1,27 +1,18 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "frontend/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist"
-      }
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/((?!api|socket\\.io).*)",
-      "destination": "/index.html"
-    }
-  ],
   "buildCommand": "cd frontend && npm run build",
   "outputDirectory": "frontend/dist",
   "installCommand": "cd frontend && npm install",
-  "framework": null,
+  "framework": "vite",
+  "rewrites": [
+    {
+      "source": "/((?!api|socket\\.io|_next/static|_next/image|assets).*)",
+      "destination": "/index.html"
+    }
+  ],
   "headers": [
     {
-      "source": "/static/(.*)",
+      "source": "/assets/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -56,5 +47,5 @@
     }
   ],
   "cleanUrls": true,
-  "trailingSlash": false,
-  }
+  "trailingSlash": false
+}
