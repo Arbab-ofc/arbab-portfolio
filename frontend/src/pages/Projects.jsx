@@ -55,11 +55,11 @@ const Projects = () => {
   return (
     <div className="min-h-screen py-24 relative overflow-hidden">
       {/* Clean White Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white via-amber-50/30 to-yellow-50/40"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-white via-amber-50/30 to-yellow-50/40 dark:from-gray-900 dark:via-gray-900/95 dark:to-gray-800"></div>
 
       {/* Subtle Accents */}
-      <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-amber-100/30 via-yellow-100/20 to-transparent rounded-full filter blur-3xl animate-pulse"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-yellow-100/30 via-amber-100/20 to-transparent rounded-full filter blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+      <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-amber-100/30 via-yellow-100/20 to-transparent dark:from-amber-900/20 dark:via-yellow-900/10 dark:to-transparent rounded-full filter blur-3xl animate-pulse"></div>
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-yellow-100/30 via-amber-100/20 to-transparent dark:from-yellow-900/20 dark:via-amber-900/10 dark:to-transparent rounded-full filter blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
 
       {/* Luxury Pattern */}
       <div className="absolute inset-0 opacity-3">
@@ -91,7 +91,7 @@ const Projects = () => {
         {[...Array(10)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-2 h-2 bg-amber-300/40 rounded-full animate-pulse"
+            className="absolute w-2 h-2 bg-amber-300/40 dark:bg-amber-700/30 rounded-full animate-pulse"
             style={{
               left: `${Math.random() * 95}%`,
               top: `${Math.random() * 95}%`,
@@ -103,8 +103,8 @@ const Projects = () => {
       </div>
 
       {/* Corner Decorations */}
-      <div className="absolute top-10 right-10 w-20 h-20 border-4 border-amber-200/30 rounded-tr-full animate-pulse"></div>
-      <div className="absolute bottom-10 left-10 w-24 h-24 border-4 border-amber-200/30 rounded-bl-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+      <div className="absolute top-10 right-10 w-20 h-20 border-4 border-amber-200/30 dark:border-amber-700/30 rounded-tr-full animate-pulse"></div>
+      <div className="absolute bottom-10 left-10 w-24 h-24 border-4 border-amber-200/30 dark:border-amber-700/30 rounded-bl-full animate-pulse" style={{ animationDelay: '1s' }}></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -127,7 +127,7 @@ const Projects = () => {
             </span>
           </h1>
 
-          <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
             A collection of my work showcasing various technologies and solutions
           </p>
         </motion.div>
@@ -138,13 +138,13 @@ const Projects = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className="mb-12 bg-white border border-amber-200/50 rounded-3xl p-8 shadow-xl"
+          className="mb-12 bg-white dark:bg-gray-800 border border-amber-200/50 dark:border-amber-800/30 rounded-3xl p-8 shadow-xl"
         >
           <div className="flex items-center gap-3 mb-6">
-            <div className="p-2 bg-gradient-to-br from-amber-100 to-yellow-100 rounded-lg">
-              <FiFilter className="text-amber-600" />
+            <div className="p-2 bg-gradient-to-br from-amber-100 to-yellow-100 dark:from-amber-900/50 dark:to-yellow-900/50 rounded-lg">
+              <FiFilter className="text-amber-600 dark:text-amber-400" />
             </div>
-            <h3 className="text-xl font-bold text-gray-900">
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white">
               Filter Projects
             </h3>
           </div>
@@ -152,7 +152,7 @@ const Projects = () => {
           <div className="grid md:grid-cols-2 gap-8">
             {/* Category Filter */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-4">
+              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4">
                 Project Type
               </label>
               <div className="flex flex-wrap gap-3">
@@ -163,7 +163,7 @@ const Projects = () => {
                     className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
                       selectedCategory === category
                         ? 'bg-gradient-to-r from-amber-500 to-yellow-500 text-white shadow-lg border border-amber-400/30'
-                        : 'bg-amber-50 text-amber-700 hover:bg-amber-100 border border-amber-200/50'
+                        : 'bg-amber-50 text-amber-700 hover:bg-amber-100 dark:bg-amber-900/30 dark:text-amber-400 dark:hover:bg-amber-900/50 border border-amber-200/50 dark:border-amber-700/50'
                     }`}
                   >
                     {category}
@@ -174,7 +174,7 @@ const Projects = () => {
 
             {/* Technology Filter */}
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-4">
+              <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4">
                 Technology
               </label>
               <div className="flex flex-wrap gap-3">
@@ -185,7 +185,7 @@ const Projects = () => {
                     className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
                       selectedTech === tech
                         ? 'bg-gradient-to-r from-amber-500 to-yellow-500 text-white shadow-lg border border-amber-400/30'
-                        : 'bg-amber-50 text-amber-700 hover:bg-amber-100 border border-amber-200/50'
+                        : 'bg-amber-50 text-amber-700 hover:bg-amber-100 dark:bg-amber-900/30 dark:text-amber-400 dark:hover:bg-amber-900/50 border border-amber-200/50 dark:border-amber-700/50'
                     }`}
                   >
                     {tech}
@@ -195,8 +195,8 @@ const Projects = () => {
             </div>
           </div>
 
-          <div className="mt-6 text-sm text-gray-600 text-center">
-            Showing <span className="font-semibold text-amber-600">{filteredProjects.length}</span> of <span className="font-semibold text-amber-600">{projects.length}</span> projects
+          <div className="mt-6 text-sm text-gray-600 dark:text-gray-400 text-center">
+            Showing <span className="font-semibold text-amber-600 dark:text-amber-400">{filteredProjects.length}</span> of <span className="font-semibold text-amber-600 dark:text-amber-400">{projects.length}</span> projects
           </div>
         </motion.div>
 
@@ -204,7 +204,7 @@ const Projects = () => {
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className="bg-white border border-amber-200/50 shadow-xl rounded-3xl h-96 animate-pulse"></div>
+              <div key={i} className="bg-white dark:bg-gray-800 border border-amber-200/50 dark:border-amber-800/30 shadow-xl rounded-3xl h-96 animate-pulse"></div>
             ))}
           </div>
         ) : filteredProjects.length === 0 ? (
@@ -213,10 +213,10 @@ const Projects = () => {
             animate={{ opacity: 1 }}
             className="text-center py-20"
           >
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-amber-100 rounded-full mb-4">
-              <FiFilter className="text-amber-600 text-2xl" />
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-amber-100 dark:bg-amber-900/30 rounded-full mb-4">
+              <FiFilter className="text-amber-600 dark:text-amber-400 text-2xl" />
             </div>
-            <p className="text-xl text-gray-600">
+            <p className="text-xl text-gray-600 dark:text-gray-400">
               No projects found with the selected filters.
             </p>
           </motion.div>
@@ -241,14 +241,14 @@ const Projects = () => {
                 className="group relative"
               >
                 {/* Luxury Project Card */}
-                <div className="relative h-full bg-white border border-amber-200/50 rounded-3xl shadow-xl hover:shadow-2xl hover:shadow-amber-200/20 transition-all duration-500 overflow-hidden">
+                <div className="relative h-full bg-white dark:bg-gray-800 border border-amber-200/50 dark:border-amber-800/30 rounded-3xl shadow-xl hover:shadow-2xl hover:shadow-amber-200/20 dark:hover:shadow-amber-800/20 transition-all duration-500 overflow-hidden">
 
                   {/* Glass Effect Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-amber-50/20 via-transparent to-yellow-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-amber-50/20 via-transparent to-yellow-50/20 dark:from-amber-900/20 dark:via-transparent dark:to-yellow-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
                   {/* Corner Accents */}
-                  <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-amber-100/30 via-yellow-100/20 to-transparent rounded-tl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-tr from-yellow-100/30 via-amber-100/20 to-transparent rounded-br-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-amber-100/30 via-yellow-100/20 to-transparent dark:from-amber-800/30 dark:via-yellow-800/20 dark:to-transparent rounded-tl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-tr from-yellow-100/30 via-amber-100/20 to-transparent dark:from-yellow-800/30 dark:via-amber-800/20 dark:to-transparent rounded-br-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
                   {/* Project Image/Placeholder */}
                   <div className="h-56 bg-gradient-to-br from-amber-500 via-yellow-500 to-amber-600 relative overflow-hidden">
@@ -266,7 +266,7 @@ const Projects = () => {
                       </div>
                     )}
                     {project.featured && (
-                      <div className="absolute top-4 right-4 bg-amber-400/20 backdrop-blur-sm border border-amber-400/30 text-amber-800 px-3 py-1 rounded-full text-xs font-bold">
+                      <div className="absolute top-4 right-4 bg-amber-400/20 backdrop-blur-sm border border-amber-400/30 text-amber-800 dark:text-amber-200 px-3 py-1 rounded-full text-xs font-bold">
                         ⭐ Featured
                       </div>
                     )}
@@ -275,15 +275,15 @@ const Projects = () => {
                   {/* Project Content */}
                   <div className="relative p-6 space-y-4">
                     <div className="flex items-start justify-between mb-3">
-                      <h3 className="text-xl font-bold text-gray-900 group-hover:text-amber-600 transition-colors duration-300">
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors duration-300">
                         {project.title}
                       </h3>
-                      <span className="px-3 py-1 bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-700 rounded-full text-xs font-medium border border-amber-300/50">
+                      <span className="px-3 py-1 bg-gradient-to-r from-amber-100 to-yellow-100 dark:from-amber-900/50 dark:to-yellow-900/50 text-amber-700 dark:text-amber-400 rounded-full text-xs font-medium border border-amber-300/50 dark:border-amber-700/50">
                         {project.projectType}
                       </span>
                     </div>
 
-                    <p className="text-gray-700 line-clamp-3 leading-relaxed">
+                    <p className="text-gray-700 dark:text-gray-300 line-clamp-3 leading-relaxed">
                       {project.shortDescription}
                     </p>
 
@@ -292,26 +292,26 @@ const Projects = () => {
                       {project.tags?.slice(0, 3).map((tag) => (
                         <span
                           key={tag}
-                          className="px-3 py-1 bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-700 rounded-full text-xs font-medium border border-amber-300/50"
+                          className="px-3 py-1 bg-gradient-to-r from-amber-100 to-yellow-100 dark:from-amber-900/50 dark:to-yellow-900/50 text-amber-700 dark:text-amber-400 rounded-full text-xs font-medium border border-amber-300/50 dark:border-amber-700/50"
                         >
                           {tag}
                         </span>
                       ))}
                       {project.tags?.length > 3 && (
-                        <span className="px-3 py-1 bg-amber-50 text-amber-600 rounded-full text-xs">
+                        <span className="px-3 py-1 bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 rounded-full text-xs">
                           +{project.tags.length - 3}
                         </span>
                       )}
                     </div>
 
                     {/* Stats */}
-                    <div className="flex items-center gap-4 text-sm text-gray-600">
+                    <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
                       <div className="flex items-center gap-1">
-                        <FiEye size={16} className="text-amber-500" />
+                        <FiEye size={16} className="text-amber-500 dark:text-amber-400" />
                         <span>{project.metrics?.views || 0}</span>
                       </div>
                       <div className="flex items-center gap-1">
-                        <FiHeart size={16} className="text-amber-500" />
+                        <FiHeart size={16} className="text-amber-500 dark:text-amber-400" />
                         <span>{project.metrics?.likes || 0}</span>
                       </div>
                     </div>
@@ -329,7 +329,7 @@ const Projects = () => {
                           href={project.links.github}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="p-2 bg-amber-50 text-amber-600 rounded-xl hover:bg-amber-100 transition-all border border-amber-200/50"
+                          className="p-2 bg-amber-50 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400 rounded-xl hover:bg-amber-100 dark:hover:bg-amber-900/50 transition-all border border-amber-200/50 dark:border-amber-700/50"
                           title="View on GitHub"
                         >
                           <FiGithub size={18} />
@@ -340,7 +340,7 @@ const Projects = () => {
                           href={project.links.live}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="p-2 bg-amber-50 text-amber-600 rounded-xl hover:bg-amber-100 transition-all border border-amber-200/50"
+                          className="p-2 bg-amber-50 text-amber-600 dark:bg-amber-900/30 dark:text-amber-400 rounded-xl hover:bg-amber-100 dark:hover:bg-amber-900/50 transition-all border border-amber-200/50 dark:border-amber-700/50"
                           title="View Live"
                         >
                           <FiExternalLink size={18} />
@@ -350,7 +350,7 @@ const Projects = () => {
                   </div>
 
                   {/* Hover Shine Effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-100/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-100/10 dark:via-amber-800/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
                 </div>
               </motion.div>
             ))}

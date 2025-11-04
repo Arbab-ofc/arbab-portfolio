@@ -234,7 +234,14 @@ const Navbar = () => {
                 </motion.div>
               ))}
 
-              {/* Social links section - show for mobile and tablets in hamburger menu */}
+              {/* Theme selector card for mobile menu */}
+              {getShowSocialLinksInMobileMenu() && (
+                <div className="pt-4 sm:pt-6 border-t dark:border-gray-800">
+                  <PremiumThemeToggle variant="card" className="w-full" />
+                </div>
+              )}
+
+            {/* Social links section - show for mobile and tablets in hamburger menu */}
               {getShowSocialLinksInMobileMenu() && (
                 <div className={`flex items-center justify-center space-x-6 sm:space-x-8 pt-4 sm:pt-6 border-t dark:border-gray-800`}>
                   {socialLinks.map((social) => (

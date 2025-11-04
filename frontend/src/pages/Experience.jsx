@@ -29,11 +29,11 @@ const Experience = () => {
   return (
     <div className="min-h-screen py-24 relative overflow-hidden">
       {/* Clean White Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white via-amber-50/30 to-yellow-50/40"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-white via-amber-50/30 to-yellow-50/40 dark:from-gray-900 dark:via-gray-900/95 dark:to-gray-800"></div>
 
       {/* Subtle Accents */}
-      <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-amber-100/30 via-yellow-100/20 to-transparent rounded-full filter blur-3xl animate-pulse"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-yellow-100/30 via-amber-100/20 to-transparent rounded-full filter blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+      <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-amber-100/30 via-yellow-100/20 to-transparent dark:from-amber-900/20 dark:via-yellow-900/10 dark:to-transparent rounded-full filter blur-3xl animate-pulse"></div>
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-yellow-100/30 via-amber-100/20 to-transparent dark:from-yellow-900/20 dark:via-amber-900/10 dark:to-transparent rounded-full filter blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
 
       {/* Luxury Pattern */}
       <div className="absolute inset-0 opacity-3">
@@ -65,7 +65,7 @@ const Experience = () => {
         {[...Array(10)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-2 h-2 bg-amber-300/40 rounded-full animate-pulse"
+            className="absolute w-2 h-2 bg-amber-300/40 dark:bg-amber-700/30 rounded-full animate-pulse"
             style={{
               left: `${Math.random() * 95}%`,
               top: `${Math.random() * 95}%`,
@@ -77,8 +77,8 @@ const Experience = () => {
       </div>
 
       {/* Corner Decorations */}
-      <div className="absolute top-10 right-10 w-20 h-20 border-4 border-amber-200/30 rounded-tr-full animate-pulse"></div>
-      <div className="absolute bottom-10 left-10 w-24 h-24 border-4 border-amber-200/30 rounded-bl-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+      <div className="absolute top-10 right-10 w-20 h-20 border-4 border-amber-200/30 dark:border-amber-700/30 rounded-tr-full animate-pulse"></div>
+      <div className="absolute bottom-10 left-10 w-24 h-24 border-4 border-amber-200/30 dark:border-amber-700/30 rounded-bl-full animate-pulse" style={{ animationDelay: '1s' }}></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -101,34 +101,34 @@ const Experience = () => {
             </span>
           </h1>
 
-          <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
             My professional journey and internship experiences
           </p>
         </motion.div>
 
         {loading ? (
-          <div className="bg-white border border-amber-200/50 rounded-3xl p-8 shadow-xl">
+          <div className="bg-white dark:bg-gray-800 border border-amber-200/50 dark:border-amber-800/30 rounded-3xl p-8 shadow-xl">
             <div className="flex items-center gap-3 mb-8">
-              <div className="p-2 bg-gradient-to-br from-amber-100 to-yellow-100 rounded-lg">
-                <FiBriefcase className="text-amber-600" />
+              <div className="p-2 bg-gradient-to-br from-amber-100 to-yellow-100 dark:from-amber-900/50 dark:to-yellow-900/50 rounded-lg">
+                <FiBriefcase className="text-amber-600 dark:text-amber-400" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900">
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white">
                 Loading Experience
               </h3>
             </div>
             <div className="space-y-6">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="bg-gradient-to-br from-amber-50 to-yellow-50 border border-amber-200/50 rounded-2xl h-64 animate-pulse"></div>
+                <div key={i} className="bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-900/30 dark:to-yellow-900/30 border border-amber-200/50 dark:border-amber-800/30 rounded-2xl h-64 animate-pulse"></div>
               ))}
             </div>
           </div>
         ) : (
-          <div className="bg-white border border-amber-200/50 rounded-3xl p-8 shadow-xl">
+          <div className="bg-white dark:bg-gray-800 border border-amber-200/50 dark:border-amber-800/30 rounded-3xl p-8 shadow-xl">
             <div className="flex items-center gap-3 mb-8">
-              <div className="p-2 bg-gradient-to-br from-amber-100 to-yellow-100 rounded-lg">
-                <FiBriefcase className="text-amber-600" />
+              <div className="p-2 bg-gradient-to-br from-amber-100 to-yellow-100 dark:from-amber-900/50 dark:to-yellow-900/50 rounded-lg">
+                <FiBriefcase className="text-amber-600 dark:text-amber-400" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900">
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white">
                 Professional Timeline
               </h3>
             </div>
@@ -157,13 +157,13 @@ const Experience = () => {
                     className="relative group"
                   >
                     {/* Luxury Timeline Dot */}
-                    <div className="absolute left-6 top-6 w-6 h-6 bg-gradient-to-br from-amber-500 to-yellow-500 rounded-full border-4 border-white shadow-lg hidden md:block z-10 group-hover:scale-110 transition-transform duration-300">
-                      <div className="absolute inset-1 bg-white rounded-full"></div>
+                    <div className="absolute left-6 top-6 w-6 h-6 bg-gradient-to-br from-amber-500 to-yellow-500 rounded-full border-4 border-white dark:border-gray-800 shadow-lg hidden md:block z-10 group-hover:scale-110 transition-transform duration-300">
+                      <div className="absolute inset-1 bg-white dark:bg-gray-800 rounded-full"></div>
                       <div className="absolute inset-2 bg-gradient-to-br from-amber-400 to-yellow-400 rounded-full"></div>
                     </div>
 
                     {/* Luxury Content Card */}
-                    <div className="md:ml-20 bg-gradient-to-br from-amber-50 to-yellow-50 border border-amber-200/50 rounded-2xl shadow-lg hover:shadow-xl hover:shadow-amber-200/20 transition-all duration-500 p-6 md:p-8 relative overflow-hidden">
+                    <div className="md:ml-20 bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-900/30 dark:to-yellow-900/30 border border-amber-200/50 dark:border-amber-800/30 rounded-2xl shadow-lg hover:shadow-xl hover:shadow-amber-200/20 dark:hover:shadow-amber-800/20 transition-all duration-500 p-6 md:p-8 relative overflow-hidden">
                       {/* Hover Effects */}
                       <div className="absolute inset-0 bg-gradient-to-br from-amber-50/20 via-transparent to-yellow-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
 
@@ -174,11 +174,11 @@ const Experience = () => {
                         {/* Header */}
                         <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                           <div className="flex-1">
-                            <h3 className="text-2xl font-bold text-gray-900 group-hover:text-amber-600 transition-colors duration-300 mb-2">
+                            <h3 className="text-2xl font-bold text-gray-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors duration-300 mb-2">
                               {exp.position}
                             </h3>
-                            <div className="flex items-center gap-2 text-amber-600 font-semibold mb-2">
-                              <FiBriefcase size={18} />
+                            <div className="flex items-center gap-2 text-amber-600 dark:text-amber-400 font-semibold mb-2">
+                              <FiBriefcase size={18} className="text-amber-600 dark:text-amber-400" />
                               <span>{exp.company}</span>
                             </div>
                           </div>
@@ -194,24 +194,24 @@ const Experience = () => {
                         </div>
 
                         {/* Meta Info */}
-                        <div className="flex flex-wrap gap-4 text-sm text-gray-700 mb-6">
-                          <div className="flex items-center gap-2 px-3 py-1 bg-amber-100/50 rounded-lg">
-                            <FiCalendar size={16} className="text-amber-600" />
-                            <span>
+                        <div className="flex flex-wrap gap-4 text-sm text-gray-700 dark:text-gray-300 mb-6">
+                          <div className="flex items-center gap-2 px-3 py-1 bg-amber-100/50 dark:bg-amber-900/30 rounded-lg">
+                            <FiCalendar size={16} className="text-amber-600 dark:text-amber-400" />
+                            <span className="text-gray-700 dark:text-gray-300">
                               {formatDate(exp.startDate)} - {exp.current ? 'Present' : formatDate(exp.endDate)}
                             </span>
                           </div>
                           {exp.location && (
-                            <div className="flex items-center gap-2 px-3 py-1 bg-amber-100/50 rounded-lg">
-                              <FiMapPin size={16} className="text-amber-600" />
-                              <span>{exp.location}</span>
+                            <div className="flex items-center gap-2 px-3 py-1 bg-amber-100/50 dark:bg-amber-900/30 rounded-lg">
+                              <FiMapPin size={16} className="text-amber-600 dark:text-amber-400" />
+                              <span className="text-gray-700 dark:text-gray-300">{exp.location}</span>
                             </div>
                           )}
                         </div>
 
                         {/* Description */}
                         {exp.description && (
-                          <p className="text-gray-700 leading-relaxed mb-6">
+                          <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
                             {exp.description}
                           </p>
                         )}
@@ -219,13 +219,13 @@ const Experience = () => {
                         {/* Responsibilities */}
                         {exp.responsibilities && exp.responsibilities.length > 0 && (
                           <div className="mb-6">
-                            <h4 className="font-bold text-gray-900 mb-3 flex items-center gap-2">
+                            <h4 className="font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
                               <span className="w-1 h-5 bg-gradient-to-b from-amber-500 to-yellow-500 rounded"></span>
                               Key Responsibilities
                             </h4>
                             <ul className="space-y-2">
                               {exp.responsibilities.map((resp, idx) => (
-                                <li key={idx} className="flex items-start gap-3 text-gray-700">
+                                <li key={idx} className="flex items-start gap-3 text-gray-700 dark:text-gray-300">
                                   <span className="flex-shrink-0 w-2 h-2 bg-gradient-to-br from-amber-500 to-yellow-500 rounded-full mt-2"></span>
                                   <span>{resp}</span>
                                 </li>
@@ -237,14 +237,14 @@ const Experience = () => {
                         {/* Achievements */}
                         {exp.achievements && exp.achievements.length > 0 && (
                           <div className="mb-6">
-                            <h4 className="font-bold text-gray-900 mb-3 flex items-center gap-2">
+                            <h4 className="font-bold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
                               <FiAward className="text-amber-500" />
                               Key Achievements
                             </h4>
                             <ul className="space-y-2">
                               {exp.achievements.map((achievement, idx) => (
-                                <li key={idx} className="flex items-start gap-3 text-gray-700">
-                                  <span className="flex-shrink-0 text-amber-500">★</span>
+                                <li key={idx} className="flex items-start gap-3 text-gray-700 dark:text-gray-300">
+                                  <span className="flex-shrink-0 text-amber-500 dark:text-amber-400">★</span>
                                   <span>{achievement}</span>
                                 </li>
                               ))}
@@ -255,14 +255,14 @@ const Experience = () => {
                         {/* Technologies */}
                         {exp.technologies && exp.technologies.length > 0 && (
                           <div>
-                            <h4 className="font-bold text-gray-900 mb-3">
+                            <h4 className="font-bold text-gray-900 dark:text-white mb-3">
                               Technologies Used
                             </h4>
                             <div className="flex flex-wrap gap-2">
                               {exp.technologies.map((tech, idx) => (
                                 <span
                                   key={idx}
-                                  className="px-3 py-1 bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-700 rounded-full text-sm font-medium border border-amber-300/50"
+                                  className="px-3 py-1 bg-gradient-to-r from-amber-100 to-yellow-100 dark:from-amber-900/50 dark:to-yellow-900/50 text-amber-700 dark:text-amber-400 rounded-full text-sm font-medium border border-amber-300/50 dark:border-amber-700/50"
                                 >
                                   {tech}
                                 </span>
@@ -278,7 +278,7 @@ const Experience = () => {
                               href={exp.website}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="text-amber-600 hover:text-amber-700 font-medium text-sm inline-flex items-center gap-1 group"
+                              className="text-amber-600 dark:text-amber-400 hover:text-amber-700 dark:hover:text-amber-300 font-medium text-sm inline-flex items-center gap-1 group"
                             >
                               Visit Company Website
                               <span className="group-hover:translate-x-1 transition-transform duration-300">→</span>
@@ -302,12 +302,12 @@ const Experience = () => {
           transition={{ delay: 0.4, duration: 0.8 }}
           className="mt-16"
         >
-          <div className="bg-white border border-amber-200/50 rounded-3xl p-8 shadow-xl">
+          <div className="bg-white dark:bg-gray-800 border border-amber-200/50 dark:border-amber-800/30 rounded-3xl p-8 shadow-xl">
             <div className="flex items-center gap-3 mb-8">
-              <div className="p-2 bg-gradient-to-br from-amber-100 to-yellow-100 rounded-lg">
-                <FiAward className="text-amber-600" />
+              <div className="p-2 bg-gradient-to-br from-amber-100 to-yellow-100 dark:from-amber-900/50 dark:to-yellow-900/50 rounded-lg">
+                <FiAward className="text-amber-600 dark:text-amber-400" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900">
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white">
                 Notable Achievements
               </h3>
             </div>
@@ -318,41 +318,36 @@ const Experience = () => {
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.5 }}
-                whileHover={{
-                  y: -4,
-                  scale: 1.02,
-                  transition: { duration: 0.3 }
-                }}
-                className="group"
+                className="relative hover:scale-[1.02] hover:-translate-y-1 transition-transform duration-300 ease-out"
               >
-                <div className="relative h-full bg-gradient-to-br from-amber-50 to-yellow-50 border border-amber-200/50 rounded-2xl p-6 hover:shadow-lg hover:shadow-amber-200/20 transition-all duration-500">
-                  {/* Hover Effects */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-amber-50/20 via-transparent to-yellow-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
+                <div className="relative h-full bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-900/30 dark:to-yellow-900/30 border border-amber-200/50 dark:border-amber-800/30 rounded-2xl p-6 shadow-lg hover:shadow-2xl hover:shadow-amber-200/30 dark:hover:shadow-amber-800/30 transition-all duration-500 ease-out">
+                  {/* Hover Effects - Single Layer */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-amber-50/20 via-transparent to-yellow-50/20 opacity-0 hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none"></div>
 
-                  {/* Corner Accent */}
-                  <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-amber-200/30 via-yellow-100/20 to-transparent rounded-tr-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  {/* Corner Accent - Simplified */}
+                  <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-amber-200/30 via-yellow-100/20 to-transparent rounded-tr-2xl opacity-0 hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+
+                  {/* Hover Shine Effect - Optimized */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-100/10 to-transparent -translate-x-full hover:translate-x-full transition-transform duration-1000 ease-out rounded-2xl pointer-events-none"></div>
 
                   <div className="relative">
                     <div className="flex items-center gap-4 mb-4">
-                      <div className="w-14 h-14 bg-gradient-to-br from-amber-500 to-yellow-500 rounded-2xl flex items-center justify-center text-white font-bold text-2xl shadow-lg group-hover:scale-110 transition-transform duration-300">
+                      <div className="w-14 h-14 bg-gradient-to-br from-amber-500 to-yellow-500 rounded-2xl flex items-center justify-center text-white font-bold text-2xl shadow-lg transition-transform duration-300 hover:scale-110">
                         7
                       </div>
                       <div>
-                        <h4 className="font-bold text-gray-900 group-hover:text-amber-600 transition-colors duration-300 text-lg">
+                        <h4 className="font-bold text-gray-900 dark:text-white transition-colors duration-300 text-lg hover:text-amber-600 dark:hover:text-amber-400">
                           Smart India Hackathon 2023
                         </h4>
-                        <p className="text-amber-700 font-medium">
+                        <p className="text-amber-700 dark:text-amber-400 font-medium">
                           Internal Hackathon
                         </p>
                       </div>
                     </div>
-                    <p className="text-gray-700 leading-relaxed">
+                    <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
                       Secured 7th rank in the Internal Hackathon of Smart India Hackathon 2023
                     </p>
                   </div>
-
-                  {/* Hover Shine Effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-100/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 rounded-2xl"></div>
                 </div>
               </motion.div>
 
@@ -361,41 +356,36 @@ const Experience = () => {
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.6 }}
-                whileHover={{
-                  y: -4,
-                  scale: 1.02,
-                  transition: { duration: 0.3 }
-                }}
-                className="group"
+                className="relative hover:scale-[1.02] hover:-translate-y-1 transition-transform duration-300 ease-out"
               >
-                <div className="relative h-full bg-gradient-to-br from-amber-50 to-yellow-50 border border-amber-200/50 rounded-2xl p-6 hover:shadow-lg hover:shadow-amber-200/20 transition-all duration-500">
-                  {/* Hover Effects */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-amber-50/20 via-transparent to-yellow-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
+                <div className="relative h-full bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-900/30 dark:to-yellow-900/30 border border-amber-200/50 dark:border-amber-800/30 rounded-2xl p-6 shadow-lg hover:shadow-2xl hover:shadow-amber-200/30 dark:hover:shadow-amber-800/30 transition-all duration-500 ease-out">
+                  {/* Hover Effects - Single Layer */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-amber-50/20 via-transparent to-yellow-50/20 opacity-0 hover:opacity-100 transition-opacity duration-500 rounded-2xl pointer-events-none"></div>
 
-                  {/* Corner Accent */}
-                  <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-amber-200/30 via-yellow-100/20 to-transparent rounded-tr-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  {/* Corner Accent - Simplified */}
+                  <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-amber-200/30 via-yellow-100/20 to-transparent rounded-tr-2xl opacity-0 hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+
+                  {/* Hover Shine Effect - Optimized */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-100/10 to-transparent -translate-x-full hover:translate-x-full transition-transform duration-1000 ease-out rounded-2xl pointer-events-none"></div>
 
                   <div className="relative">
                     <div className="flex items-center gap-4 mb-4">
-                      <div className="w-14 h-14 bg-gradient-to-br from-amber-500 to-yellow-500 rounded-2xl flex items-center justify-center text-white font-bold text-2xl shadow-lg group-hover:scale-110 transition-transform duration-300">
+                      <div className="w-14 h-14 bg-gradient-to-br from-amber-500 to-yellow-500 rounded-2xl flex items-center justify-center text-white font-bold text-2xl shadow-lg transition-transform duration-300 hover:scale-110">
                         31
                       </div>
                       <div>
-                        <h4 className="font-bold text-gray-900 group-hover:text-amber-600 transition-colors duration-300 text-lg">
+                        <h4 className="font-bold text-gray-900 dark:text-white transition-colors duration-300 text-lg hover:text-amber-600 dark:hover:text-amber-400">
                           Smart India Hackathon 2024
                         </h4>
-                        <p className="text-amber-700 font-medium">
+                        <p className="text-amber-700 dark:text-amber-400 font-medium">
                           Internal Hackathon
                         </p>
                       </div>
                     </div>
-                    <p className="text-gray-700 leading-relaxed">
+                    <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
                       Secured 31st rank in the Internal Hackathon of Smart India Hackathon 2024
                     </p>
                   </div>
-
-                  {/* Hover Shine Effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-100/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 rounded-2xl"></div>
                 </div>
               </motion.div>
             </div>

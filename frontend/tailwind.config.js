@@ -71,6 +71,23 @@ export default {
           '50%': { boxShadow: '0 0 40px rgba(59, 130, 246, 0.8)' },
         },
       },
+      transitionProperty: {
+        'width': 'width',
+        'height': 'height',
+        'spacing': 'margin, padding',
+        'colors': 'background-color, border-color, color, fill, stroke',
+        'opacity': 'opacity',
+        'shadow': 'box-shadow',
+        'transform': 'transform',
+        'theme': 'background-color, border-color, color, fill, stroke, opacity, box-shadow, transform',
+      },
+      transitionDuration: {
+        'theme': '300ms',
+        'theme-slow': '500ms',
+      },
+      transitionTimingFunction: {
+        'theme': 'cubic-bezier(0.4, 0, 0.2, 1)',
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',

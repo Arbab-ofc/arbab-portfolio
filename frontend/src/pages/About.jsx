@@ -33,11 +33,11 @@ const About = () => {
   return (
     <div className="min-h-screen py-24 relative overflow-hidden">
       {/* Clean White Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white via-amber-50/30 to-yellow-50/40"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-white via-amber-50/30 to-yellow-50/40 dark:from-gray-900 dark:via-gray-900/95 dark:to-gray-800"></div>
 
       {/* Subtle Accents */}
-      <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-amber-100/30 via-yellow-100/20 to-transparent rounded-full filter blur-3xl animate-pulse"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-yellow-100/30 via-amber-100/20 to-transparent rounded-full filter blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+      <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-amber-100/30 via-yellow-100/20 to-transparent dark:from-amber-900/20 dark:via-yellow-900/10 dark:to-transparent rounded-full filter blur-3xl animate-pulse"></div>
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-yellow-100/30 via-amber-100/20 to-transparent dark:from-yellow-900/20 dark:via-amber-900/10 dark:to-transparent rounded-full filter blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
 
       {/* Luxury Pattern */}
       <div className="absolute inset-0 opacity-3">
@@ -69,7 +69,7 @@ const About = () => {
         {[...Array(10)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-2 h-2 bg-amber-300/40 rounded-full animate-pulse"
+            className="absolute w-2 h-2 bg-amber-300/40 dark:bg-amber-700/30 rounded-full animate-pulse"
             style={{
               left: `${Math.random() * 95}%`,
               top: `${Math.random() * 95}%`,
@@ -81,8 +81,8 @@ const About = () => {
       </div>
 
       {/* Corner Decorations */}
-      <div className="absolute top-10 right-10 w-20 h-20 border-4 border-amber-200/30 rounded-tr-full animate-pulse"></div>
-      <div className="absolute bottom-10 left-10 w-24 h-24 border-4 border-amber-200/30 rounded-bl-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+      <div className="absolute top-10 right-10 w-20 h-20 border-4 border-amber-200/30 dark:border-amber-700/30 rounded-tr-full animate-pulse"></div>
+      <div className="absolute bottom-10 left-10 w-24 h-24 border-4 border-amber-200/30 dark:border-amber-700/30 rounded-bl-full animate-pulse" style={{ animationDelay: '1s' }}></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -105,7 +105,7 @@ const About = () => {
             </span>
           </h1>
 
-          <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
             Passionate Full-Stack Developer with expertise in MERN stack and Data Analytics
           </p>
         </motion.div>
@@ -118,12 +118,12 @@ const About = () => {
           transition={{ delay: 0.1 }}
           className="mb-20"
         >
-          <div className="bg-white border border-amber-200/50 rounded-3xl p-8 shadow-xl">
+          <div className="bg-white dark:bg-gray-800 border border-amber-200/50 dark:border-amber-800/30 rounded-3xl p-8 shadow-xl">
             <div className="flex items-center gap-3 mb-8">
-              <div className="p-2 bg-gradient-to-br from-amber-100 to-yellow-100 rounded-lg">
-                <FiTrendingUp className="text-amber-600" />
+              <div className="p-2 bg-gradient-to-br from-amber-100 to-yellow-100 dark:from-amber-900/50 dark:to-yellow-900/50 rounded-lg">
+                <FiTrendingUp className="text-amber-600 dark:text-amber-400" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900">
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white">
                 Professional Stats
               </h3>
             </div>
@@ -147,18 +147,18 @@ const About = () => {
                   }}
                   className="group"
                 >
-                  <div className="relative h-full bg-gradient-to-br from-amber-50 to-yellow-50 border border-amber-200/50 rounded-2xl p-6 text-center hover:shadow-lg hover:shadow-amber-200/20 transition-all duration-500">
+                  <div className="relative h-full bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-900/30 dark:to-yellow-900/30 border border-amber-200/50 dark:border-amber-800/30 rounded-2xl p-6 text-center hover:shadow-lg hover:shadow-amber-200/20 dark:hover:shadow-amber-800/20 transition-all duration-500">
                     {/* Hover Effects */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-amber-50/20 via-transparent to-yellow-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-amber-50/20 via-transparent to-yellow-50/20 dark:from-amber-800/20 dark:via-transparent dark:to-yellow-800/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
 
                     <div className="relative">
                       <div className="w-12 h-12 mx-auto mb-4 bg-gradient-to-br from-amber-500 to-yellow-500 rounded-xl flex items-center justify-center text-white shadow-lg">
                         <stat.icon className="w-6 h-6" />
                       </div>
-                      <div className="text-3xl font-bold text-gray-900 mb-1 group-hover:text-amber-600 transition-colors duration-300">
+                      <div className="text-3xl font-bold text-gray-900 dark:text-white mb-1 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors duration-300">
                         {stat.value}
                       </div>
-                      <div className="text-sm text-gray-700 group-hover:text-amber-700 transition-colors duration-300">
+                      <div className="text-sm text-gray-700 dark:text-gray-300 group-hover:text-amber-700 dark:group-hover:text-amber-400 transition-colors duration-300">
                         {stat.label}
                       </div>
                     </div>
@@ -177,17 +177,17 @@ const About = () => {
             viewport={{ once: true }}
             transition={{ delay: 0.2, duration: 0.8 }}
           >
-            <div className="bg-white border border-amber-200/50 rounded-3xl p-8 shadow-xl h-full">
+            <div className="bg-white dark:bg-gray-800 border border-amber-200/50 dark:border-amber-800/30 rounded-3xl p-8 shadow-xl h-full">
               <div className="flex items-center gap-3 mb-6">
-                <div className="p-2 bg-gradient-to-br from-amber-100 to-yellow-100 rounded-lg">
-                  <FiCode className="text-amber-600" />
+                <div className="p-2 bg-gradient-to-br from-amber-100 to-yellow-100 dark:from-amber-900/50 dark:to-yellow-900/50 rounded-lg">
+                  <FiCode className="text-amber-600 dark:text-amber-400" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white">
                   Who I Am
                 </h3>
               </div>
 
-              <div className="space-y-4 text-gray-700 leading-relaxed">
+              <div className="space-y-4 text-gray-700 dark:text-gray-300 leading-relaxed">
                 <p>
                   I'm Arbab Arshad, a passionate Full-Stack MERN Developer and Data Analyst currently pursuing B.Tech in Electronics and Communication Engineering at IIIT Bhagalpur.
                 </p>
@@ -207,12 +207,12 @@ const About = () => {
             viewport={{ once: true }}
             transition={{ delay: 0.3, duration: 0.8 }}
           >
-            <div className="bg-white border border-amber-200/50 rounded-3xl p-8 shadow-xl h-full">
+            <div className="bg-white dark:bg-gray-800 border border-amber-200/50 dark:border-amber-800/30 rounded-3xl p-8 shadow-xl h-full">
               <div className="flex items-center gap-3 mb-6">
-                <div className="p-2 bg-gradient-to-br from-amber-100 to-yellow-100 rounded-lg">
-                  <FiDatabase className="text-amber-600" />
+                <div className="p-2 bg-gradient-to-br from-amber-100 to-yellow-100 dark:from-amber-900/50 dark:to-yellow-900/50 rounded-lg">
+                  <FiDatabase className="text-amber-600 dark:text-amber-400" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900">
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white">
                   What I Do
                 </h3>
               </div>
@@ -247,16 +247,16 @@ const About = () => {
                     }}
                     className="group"
                   >
-                    <div className="bg-gradient-to-br from-amber-50 to-yellow-50 border border-amber-200/50 rounded-xl p-4 hover:shadow-md hover:shadow-amber-200/20 transition-all duration-500">
+                    <div className="bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-900/30 dark:to-yellow-900/30 border border-amber-200/50 dark:border-amber-800/30 rounded-xl p-4 hover:shadow-md hover:shadow-amber-200/20 dark:hover:shadow-amber-800/20 transition-all duration-500">
                       <div className="flex items-start gap-3">
                         <div className="w-8 h-8 bg-gradient-to-br from-amber-500 to-yellow-500 rounded-lg flex items-center justify-center text-white flex-shrink-0 mt-1">
                           <item.icon className="w-4 h-4" />
                         </div>
                         <div>
-                          <h4 className="font-semibold text-gray-900 group-hover:text-amber-600 transition-colors duration-300 mb-2">
+                          <h4 className="font-semibold text-gray-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors duration-300 mb-2">
                             {item.title}
                           </h4>
-                          <p className="text-gray-700 text-sm leading-relaxed">
+                          <p className="text-gray-700 dark:text-gray-300 text-sm leading-relaxed">
                             {item.description}
                           </p>
                         </div>
@@ -277,12 +277,12 @@ const About = () => {
           transition={{ delay: 0.4, duration: 0.8 }}
           className="mb-20"
         >
-          <div className="bg-white border border-amber-200/50 rounded-3xl p-8 shadow-xl">
+          <div className="bg-white dark:bg-gray-800 border border-amber-200/50 dark:border-amber-800/30 rounded-3xl p-8 shadow-xl">
             <div className="flex items-center gap-3 mb-8">
-              <div className="p-2 bg-gradient-to-br from-amber-100 to-yellow-100 rounded-lg">
-                <FiAward className="text-amber-600" />
+              <div className="p-2 bg-gradient-to-br from-amber-100 to-yellow-100 dark:from-amber-900/50 dark:to-yellow-900/50 rounded-lg">
+                <FiAward className="text-amber-600 dark:text-amber-400" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900">
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white">
                 Education Background
               </h3>
             </div>
@@ -301,17 +301,17 @@ const About = () => {
                   }}
                   className="group"
                 >
-                  <div className="bg-gradient-to-br from-amber-50 to-yellow-50 border border-amber-200/50 rounded-2xl p-6 hover:shadow-lg hover:shadow-amber-200/20 transition-all duration-500">
+                  <div className="bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-900/30 dark:to-yellow-900/30 border border-amber-200/50 dark:border-amber-800/30 rounded-2xl p-6 hover:shadow-lg hover:shadow-amber-200/20 dark:hover:shadow-amber-800/20 transition-all duration-500">
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between">
                       <div className="flex-1">
-                        <h4 className="text-xl font-bold text-gray-900 group-hover:text-amber-600 transition-colors duration-300 mb-2">
+                        <h4 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors duration-300 mb-2">
                           {edu.degree}
                         </h4>
-                        <p className="text-gray-700 mb-1 font-medium">
+                        <p className="text-gray-700 dark:text-gray-300 mb-1 font-medium">
                           {edu.institution}
                         </p>
-                        <p className="text-sm text-gray-600 flex items-center gap-2">
-                          <span className="w-2 h-2 bg-amber-400 rounded-full"></span>
+                        <p className="text-sm text-gray-600 dark:text-gray-400 flex items-center gap-2">
+                          <span className="w-2 h-2 bg-amber-400 dark:bg-amber-500 rounded-full"></span>
                           {edu.period}
                         </p>
                       </div>
@@ -335,12 +335,12 @@ const About = () => {
           viewport={{ once: true }}
           transition={{ delay: 0.6, duration: 0.8 }}
         >
-          <div className="bg-white border border-amber-200/50 rounded-3xl p-8 shadow-xl">
+          <div className="bg-white dark:bg-gray-800 border border-amber-200/50 dark:border-amber-800/30 rounded-3xl p-8 shadow-xl">
             <div className="flex items-center gap-3 mb-8">
-              <div className="p-2 bg-gradient-to-br from-amber-100 to-yellow-100 rounded-lg">
-                <FiTrendingUp className="text-amber-600" />
+              <div className="p-2 bg-gradient-to-br from-amber-100 to-yellow-100 dark:from-amber-900/50 dark:to-yellow-900/50 rounded-lg">
+                <FiTrendingUp className="text-amber-600 dark:text-amber-400" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900">
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white">
                 Professional Skills & Competencies
               </h3>
             </div>
@@ -366,31 +366,26 @@ const About = () => {
                     delay: 0.7 + index * 0.05,
                     type: "spring"
                   }}
-                  whileHover={{
-                    y: -4,
-                    scale: 1.05,
-                    transition: { duration: 0.3 }
-                  }}
-                  className="group"
+                  className="relative hover:scale-105 hover:-translate-y-1 transition-transform duration-300 ease-out"
                 >
-                  <div className="relative h-full bg-gradient-to-br from-amber-50 to-yellow-50 border border-amber-200/50 rounded-xl p-4 text-center hover:shadow-lg hover:shadow-amber-200/20 transition-all duration-500">
-                    {/* Hover Effects */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-amber-50/20 via-transparent to-yellow-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl"></div>
+                  <div className="relative h-full bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-900/30 dark:to-yellow-900/30 border border-amber-200/50 dark:border-amber-800/30 rounded-xl p-4 text-center hover:shadow-xl hover:shadow-amber-200/30 dark:hover:shadow-amber-800/30 transition-all duration-500">
+                    {/* Hover Effects - Single Layer */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-amber-50/20 via-transparent to-yellow-50/20 dark:from-amber-800/20 dark:via-transparent dark:to-yellow-800/20 opacity-0 hover:opacity-100 transition-opacity duration-500 rounded-xl pointer-events-none"></div>
 
-                    {/* Corner Accent */}
-                    <div className="absolute top-0 right-0 w-8 h-8 bg-gradient-to-bl from-amber-200/40 via-yellow-100/20 to-transparent rounded-tr-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    {/* Corner Accent - Simplified */}
+                    <div className="absolute top-0 right-0 w-8 h-8 bg-gradient-to-bl from-amber-200/40 via-yellow-100/20 to-transparent dark:from-amber-700/40 dark:via-yellow-700/20 dark:to-transparent rounded-tr-xl opacity-0 hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+
+                    {/* Hover Shine Effect - Optimized */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-100/10 dark:via-amber-800/10 to-transparent -translate-x-full hover:translate-x-full transition-transform duration-1000 ease-out rounded-xl pointer-events-none"></div>
 
                     <div className="relative">
-                      <div className="w-8 h-8 mx-auto mb-3 bg-gradient-to-br from-amber-400 to-yellow-400 rounded-lg flex items-center justify-center text-white shadow-md group-hover:shadow-lg transition-shadow duration-300">
+                      <div className="w-8 h-8 mx-auto mb-3 bg-gradient-to-br from-amber-400 to-yellow-400 rounded-lg flex items-center justify-center text-white shadow-md transition-transform duration-300 hover:scale-110">
                         <skill.icon className="w-4 h-4" />
                       </div>
-                      <span className="text-gray-900 group-hover:text-amber-600 transition-colors duration-300 font-semibold text-sm leading-tight">
+                      <span className="text-gray-900 dark:text-white transition-colors duration-300 font-semibold text-sm leading-tight hover:text-amber-600 dark:hover:text-amber-400">
                         {skill.name}
                       </span>
                     </div>
-
-                    {/* Hover Shine Effect */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-100/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 rounded-xl"></div>
                   </div>
                 </motion.div>
               ))}

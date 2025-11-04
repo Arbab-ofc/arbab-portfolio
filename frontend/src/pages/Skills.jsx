@@ -133,11 +133,11 @@ const Skills = () => {
   return (
     <div className="min-h-screen py-24 relative overflow-hidden">
       {/* Clean White Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white via-amber-50/30 to-yellow-50/40"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-white via-amber-50/30 to-yellow-50/40 dark:from-gray-900 dark:via-gray-900/95 dark:to-gray-800"></div>
 
       {/* Subtle Accents */}
-      <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-amber-100/30 via-yellow-100/20 to-transparent rounded-full filter blur-3xl animate-pulse"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-yellow-100/30 via-amber-100/20 to-transparent rounded-full filter blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+      <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-amber-100/30 via-yellow-100/20 to-transparent dark:from-amber-900/20 dark:via-yellow-900/10 dark:to-transparent rounded-full filter blur-3xl animate-pulse"></div>
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-yellow-100/30 via-amber-100/20 to-transparent dark:from-yellow-900/20 dark:via-amber-900/10 dark:to-transparent rounded-full filter blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
 
       {/* Luxury Pattern */}
       <div className="absolute inset-0 opacity-3">
@@ -169,7 +169,7 @@ const Skills = () => {
         {[...Array(10)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-2 h-2 bg-amber-300/40 rounded-full animate-pulse"
+            className="absolute w-2 h-2 bg-amber-300/40 dark:bg-amber-700/30 rounded-full animate-pulse"
             style={{
               left: `${Math.random() * 95}%`,
               top: `${Math.random() * 95}%`,
@@ -181,8 +181,8 @@ const Skills = () => {
       </div>
 
       {/* Corner Decorations */}
-      <div className="absolute top-10 right-10 w-20 h-20 border-4 border-amber-200/30 rounded-tr-full animate-pulse"></div>
-      <div className="absolute bottom-10 left-10 w-24 h-24 border-4 border-amber-200/30 rounded-bl-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+      <div className="absolute top-10 right-10 w-20 h-20 border-4 border-amber-200/30 dark:border-amber-700/30 rounded-tr-full animate-pulse"></div>
+      <div className="absolute bottom-10 left-10 w-24 h-24 border-4 border-amber-200/30 dark:border-amber-700/30 rounded-bl-full animate-pulse" style={{ animationDelay: '1s' }}></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -205,7 +205,7 @@ const Skills = () => {
             </span>
           </h1>
 
-          <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
             A comprehensive overview of my technical expertise and proficiency levels
           </p>
         </motion.div>
@@ -213,7 +213,7 @@ const Skills = () => {
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[1, 2, 3, 4, 5, 6].map((i) => (
-              <div key={i} className="bg-white border border-amber-200/50 shadow-xl rounded-3xl h-64 animate-pulse"></div>
+              <div key={i} className="bg-white dark:bg-gray-800 border border-amber-200/50 dark:border-amber-800/30 shadow-xl rounded-3xl h-64 animate-pulse"></div>
             ))}
           </div>
         ) : (
@@ -231,7 +231,7 @@ const Skills = () => {
                 }}
               >
                 {/* Category Header */}
-                <div className="bg-white border border-amber-200/50 rounded-3xl shadow-xl p-8 mb-8">
+                <div className="bg-white dark:bg-gray-800 border border-amber-200/50 dark:border-amber-800/30 rounded-3xl shadow-xl p-8 mb-8">
                   <h2 className={`text-3xl font-bold bg-gradient-to-r ${getCategoryColor(category)} bg-clip-text text-transparent mb-4`}>
                     {category}
                   </h2>
@@ -259,25 +259,25 @@ const Skills = () => {
                       className="group relative"
                     >
                       {/* Luxury Skill Card */}
-                      <div className="relative h-full bg-white border border-amber-200/50 rounded-3xl shadow-xl hover:shadow-2xl hover:shadow-amber-200/20 transition-all duration-500 overflow-hidden">
+                      <div className="relative h-full bg-white dark:bg-gray-800 border border-amber-200/50 dark:border-amber-800/30 rounded-3xl shadow-xl hover:shadow-2xl hover:shadow-amber-200/20 dark:hover:shadow-amber-800/20 transition-all duration-500 overflow-hidden">
 
                         {/* Glass Effect Overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-amber-50/20 via-transparent to-yellow-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div className="absolute inset-0 bg-gradient-to-br from-amber-50/20 via-transparent to-yellow-50/20 dark:from-amber-900/20 dark:via-transparent dark:to-yellow-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
                         {/* Corner Accents */}
-                        <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-amber-100/30 via-yellow-100/20 to-transparent rounded-tl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                        <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-tr from-yellow-100/30 via-amber-100/20 to-transparent rounded-br-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-amber-100/30 via-yellow-100/20 to-transparent dark:from-amber-800/30 dark:via-yellow-800/20 dark:to-transparent rounded-tl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                        <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-tr from-yellow-100/30 via-amber-100/20 to-transparent dark:from-yellow-800/30 dark:via-amber-800/20 dark:to-transparent rounded-br-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
                         {/* Skill Content */}
                         <div className="relative p-8">
                           {/* Skill Header */}
                           <div className="flex items-start justify-between mb-6">
                             <div className="flex-1">
-                              <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-amber-600 transition-colors duration-300">
+                              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors duration-300">
                                 {skill.name}
                               </h3>
                               {skill.experience && (
-                                <p className="text-sm text-gray-600">
+                                <p className="text-sm text-gray-600 dark:text-gray-400">
                                   {skill.experience}
                                 </p>
                               )}
@@ -289,7 +289,7 @@ const Skills = () => {
 
                           {/* Description */}
                           {skill.description && (
-                            <p className="text-gray-700 mb-6 leading-relaxed">
+                            <p className="text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
                               {skill.description}
                             </p>
                           )}
@@ -297,14 +297,14 @@ const Skills = () => {
                           {/* Proficiency Bar */}
                           <div className="mb-6">
                             <div className="flex justify-between items-center mb-3">
-                              <span className="text-sm font-semibold text-gray-700">
+                              <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">
                                 Proficiency
                               </span>
-                              <span className="text-sm font-bold text-amber-600">
+                              <span className="text-sm font-bold text-amber-600 dark:text-amber-400">
                                 {skill.proficiency}%
                               </span>
                             </div>
-                            <div className="w-full bg-amber-100 rounded-full h-3 overflow-hidden">
+                            <div className="w-full bg-amber-100 dark:bg-amber-900/30 rounded-full h-3 overflow-hidden">
                               <motion.div
                                 initial={{ width: 0 }}
                                 whileInView={{ width: `${skill.proficiency}%` }}
@@ -325,7 +325,7 @@ const Skills = () => {
                                                   </div>
 
                         {/* Hover Shine Effect */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-100/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-100/10 dark:via-amber-800/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
                       </div>
                     </motion.div>
                   ))}
@@ -341,30 +341,30 @@ const Skills = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.5 }}
-          className="mt-20 bg-white border border-amber-200/50 rounded-3xl shadow-xl p-12"
+          className="mt-20 bg-white dark:bg-gray-800 border border-amber-200/50 dark:border-amber-800/30 rounded-3xl shadow-xl p-12"
         >
           <div className="text-center">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-amber-100 to-yellow-100 rounded-full mb-6">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-amber-100 to-yellow-100 dark:from-amber-900/50 dark:to-yellow-900/50 rounded-full mb-6">
               <span className="text-3xl">🎯</span>
             </div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
               <span className="bg-gradient-to-r from-amber-600 via-yellow-600 to-amber-700 bg-clip-text text-transparent">
                 Continuous Learning
               </span>
             </h2>
-            <p className="text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
               I'm constantly expanding my skill set and staying updated with the latest technologies and best practices in web development and data analytics. Always eager to learn and take on new challenges!
             </p>
 
             <div className="mt-8 flex flex-wrap justify-center gap-4">
-              <div className="px-6 py-3 bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200/50 rounded-full">
-                <span className="text-amber-700 font-semibold">📚 Lifelong Learner</span>
+              <div className="px-6 py-3 bg-gradient-to-r from-amber-50 to-yellow-50 dark:from-amber-900/30 dark:to-yellow-900/30 border border-amber-200/50 dark:border-amber-800/30 rounded-full">
+                <span className="text-amber-700 dark:text-amber-400 font-semibold">📚 Lifelong Learner</span>
               </div>
-              <div className="px-6 py-3 bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200/50 rounded-full">
-                <span className="text-amber-700 font-semibold">🚀 Innovation Driven</span>
+              <div className="px-6 py-3 bg-gradient-to-r from-amber-50 to-yellow-50 dark:from-amber-900/30 dark:to-yellow-900/30 border border-amber-200/50 dark:border-amber-800/30 rounded-full">
+                <span className="text-amber-700 dark:text-amber-400 font-semibold">🚀 Innovation Driven</span>
               </div>
-              <div className="px-6 py-3 bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200/50 rounded-full">
-                <span className="text-amber-700 font-semibold">💡 Problem Solver</span>
+              <div className="px-6 py-3 bg-gradient-to-r from-amber-50 to-yellow-50 dark:from-amber-900/30 dark:to-yellow-900/30 border border-amber-200/50 dark:border-amber-800/30 rounded-full">
+                <span className="text-amber-700 dark:text-amber-400 font-semibold">💡 Problem Solver</span>
               </div>
             </div>
           </div>

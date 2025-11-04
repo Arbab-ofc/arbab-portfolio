@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { analyticsAPI, projectsAPI, blogsAPI, contactAPI, skillsAPI, experienceAPI, quotesAPI, resumeAPI } from '../utils/api';
 import ProjectEditModal from '../components/admin/ProjectEditModal';
 import ResumeUpload from '../components/admin/ResumeUpload'; // Fixed HiDocument import
+import PremiumThemeToggle from '../components/ui/PremiumThemeToggle';
+import ThemeToggle from '../components/ui/ThemeToggle';
 import {
   HiViewGrid,
   HiChartBar,
@@ -22,6 +24,7 @@ import {
   HiSparkles,
   HiPencil,
   HiTrash,
+  HiHome,
 } from 'react-icons/hi';
 
 const AdminDashboard = () => {
@@ -487,6 +490,10 @@ const AdminDashboard = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     navigate('/admin-secret-login-portal');
+  };
+
+  const handleGoHome = () => {
+    navigate('/');
   };
 
   // Project management functions
@@ -1079,13 +1086,25 @@ const AdminDashboard = () => {
                 Monitor performance, publish updates, and stay connected with your audience.
               </p>
             </div>
-            <button
-              onClick={handleLogout}
-              className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-sky-500/20 transition hover:border-white/30 hover:bg-white/10"
-            >
-              <HiArrowSmRight className="text-lg" />
-              <span>Log out</span>
-            </button>
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+              {/* Home Button */}
+              <button
+                onClick={handleGoHome}
+                className="inline-flex items-center gap-2 sm:gap-3 rounded-full border border-white/10 bg-white/5 px-4 sm:px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-500/20 transition hover:border-white/30 hover:bg-white/10 hover:shadow-emerald-500/30"
+              >
+                <HiHome className="text-base sm:text-lg" />
+                <span className="text-xs sm:text-sm">Home</span>
+              </button>
+
+              {/* Logout Button */}
+              <button
+                onClick={handleLogout}
+                className="inline-flex items-center gap-2 sm:gap-3 rounded-full border border-white/10 bg-white/5 px-4 sm:px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-sky-500/20 transition hover:border-white/30 hover:bg-white/10 hover:shadow-sky-500/30"
+              >
+                <HiArrowSmRight className="text-base sm:text-lg" />
+                <span className="text-xs sm:text-sm">Logout</span>
+              </button>
+            </div>
           </div>
           <div className="border-t border-white/10" />
           <div className="grid gap-4 p-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">

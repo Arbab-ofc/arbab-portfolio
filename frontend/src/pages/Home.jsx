@@ -165,11 +165,11 @@ const Home = () => {
       {/* Featured Projects Section */}
       <section className="py-24 relative overflow-hidden">
         {/* Clean White Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-white via-amber-50/30 to-yellow-50/40"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-white via-amber-50/30 to-yellow-50/40 dark:from-gray-900 dark:via-gray-900/95 dark:to-gray-800"></div>
 
         {/* Subtle Accents */}
-        <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-amber-100/30 via-yellow-100/20 to-transparent rounded-full filter blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-yellow-100/30 via-amber-100/20 to-transparent rounded-full filter blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-amber-100/30 via-yellow-100/20 to-transparent dark:from-amber-900/20 dark:via-yellow-900/10 dark:to-transparent rounded-full filter blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-yellow-100/30 via-amber-100/20 to-transparent dark:from-yellow-900/20 dark:via-amber-900/10 dark:to-transparent rounded-full filter blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
 
         {/* Luxury Pattern */}
         <div className="absolute inset-0 opacity-3">
@@ -201,7 +201,7 @@ const Home = () => {
           {[...Array(10)].map((_, i) => (
             <div
               key={i}
-              className="absolute w-2 h-2 bg-amber-300/40 rounded-full animate-pulse"
+              className="absolute w-2 h-2 bg-amber-300/40 dark:bg-amber-700/30 rounded-full animate-pulse"
               style={{
                 left: `${Math.random() * 95}%`,
                 top: `${Math.random() * 95}%`,
@@ -213,8 +213,8 @@ const Home = () => {
           </div>
 
         {/* Corner Decorations */}
-        <div className="absolute top-10 right-10 w-20 h-20 border-4 border-amber-200/30 rounded-tr-full animate-pulse"></div>
-        <div className="absolute bottom-10 left-10 w-24 h-24 border-4 border-amber-200/30 rounded-bl-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute top-10 right-10 w-20 h-20 border-4 border-amber-200/30 dark:border-amber-700/30 rounded-tr-full animate-pulse"></div>
+        <div className="absolute bottom-10 left-10 w-24 h-24 border-4 border-amber-200/30 dark:border-amber-700/30 rounded-bl-full animate-pulse" style={{ animationDelay: '1s' }}></div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Section Header */}
@@ -237,7 +237,7 @@ const Home = () => {
               </span>
             </h2>
 
-            <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
               Explore my latest work showcasing innovative solutions,
               modern technologies, and creative problem-solving approaches.
             </p>
@@ -247,7 +247,7 @@ const Home = () => {
           {loading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="bg-white border border-amber-200/50 shadow-xl rounded-3xl h-96 animate-pulse"></div>
+                <div key={i} className="bg-white dark:bg-gray-800 border border-amber-200/50 dark:border-amber-800/30 shadow-xl rounded-3xl h-96 animate-pulse"></div>
               ))}
             </div>
           ) : (
@@ -271,14 +271,14 @@ const Home = () => {
                   className="group relative"
                 >
                   {/* Luxury Project Card */}
-                  <div className="relative h-full bg-white border border-amber-200/50 rounded-3xl shadow-xl hover:shadow-2xl hover:shadow-amber-200/20 transition-all duration-500 overflow-hidden">
+                  <div className="relative h-full bg-white dark:bg-gray-800 border border-amber-200/50 dark:border-amber-800/30 rounded-3xl shadow-xl hover:shadow-2xl hover:shadow-amber-200/20 dark:hover:shadow-amber-800/20 transition-all duration-500 overflow-hidden">
 
                     {/* Glass Effect Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-amber-50/20 via-transparent to-yellow-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-amber-50/20 via-transparent to-yellow-50/20 dark:from-amber-900/20 dark:via-transparent dark:to-yellow-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
                     {/* Corner Accents */}
-                    <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-amber-100/30 via-yellow-100/20 to-transparent rounded-tl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-tr from-yellow-100/30 via-amber-100/20 to-transparent rounded-br-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-amber-100/30 via-yellow-100/20 to-transparent dark:from-amber-800/30 dark:via-yellow-800/20 dark:to-transparent rounded-tl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-tr from-yellow-100/30 via-amber-100/20 to-transparent dark:from-yellow-800/30 dark:via-amber-800/20 dark:to-transparent rounded-br-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
                     {/* Project Image/Preview */}
                     <div className="relative h-56 bg-gradient-to-br from-amber-500 via-yellow-500 to-amber-600 overflow-hidden">
@@ -325,12 +325,12 @@ const Home = () => {
                     {/* Project Content */}
                     <div className="relative p-6 space-y-4">
                       {/* Title */}
-                      <h3 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-amber-600 transition-colors duration-300">
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors duration-300">
                         {project.title}
                       </h3>
 
                       {/* Description */}
-                      <p className="text-gray-700 line-clamp-3 leading-relaxed">
+                      <p className="text-gray-700 dark:text-gray-300 line-clamp-3 leading-relaxed">
                         {project.shortDescription}
                       </p>
 
@@ -339,13 +339,13 @@ const Home = () => {
                         {project.tags?.slice(0, 3).map((tag) => (
                           <span
                             key={tag}
-                            className="px-3 py-1 bg-gradient-to-r from-amber-100 to-yellow-100 text-amber-700 rounded-full text-xs font-medium border border-amber-300/50"
+                            className="px-3 py-1 bg-gradient-to-r from-amber-100 to-yellow-100 dark:from-amber-900/50 dark:to-yellow-900/50 text-amber-700 dark:text-amber-400 rounded-full text-xs font-medium border border-amber-300/50 dark:border-amber-700/50"
                           >
                             {tag}
                           </span>
                         ))}
                         {project.tags?.length > 3 && (
-                          <span className="px-3 py-1 bg-amber-50 text-amber-600 rounded-full text-xs">
+                          <span className="px-3 py-1 bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 rounded-full text-xs">
                             +{project.tags.length - 3} more
                           </span>
                         )}
@@ -354,18 +354,18 @@ const Home = () => {
                       {/* View Project Link */}
                       <Link
                         to={`/projects/${project.slug}`}
-                        className="group/link inline-flex items-center gap-2 text-amber-600 font-semibold hover:text-amber-700 transition-all duration-300"
+                        className="group/link inline-flex items-center gap-2 text-amber-600 dark:text-amber-400 font-semibold hover:text-amber-700 dark:hover:text-amber-300 transition-all duration-300"
                       >
                         <span className="relative">
                           View Project
-                          <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-600 group-hover/link:w-full transition-all duration-300"></span>
+                          <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-600 dark:bg-amber-400 group-hover/link:w-full transition-all duration-300"></span>
                         </span>
                         <FiArrowRight className="group-hover/link:translate-x-1 transition-transform duration-300" />
                       </Link>
                     </div>
 
                     {/* Hover Shine Effect */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-100/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-100/10 dark:via-amber-800/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
                   </div>
                 </motion.div>
               ))}
@@ -408,11 +408,11 @@ const Home = () => {
       {/* Technical Skills Section */}
       <section className="py-24 relative overflow-hidden">
         {/* Clean White Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-white via-amber-50/30 to-yellow-50/40"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-white via-amber-50/30 to-yellow-50/40 dark:from-gray-900 dark:via-gray-900/95 dark:to-gray-800"></div>
 
         {/* Subtle Accents */}
-        <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-amber-100/30 via-yellow-100/20 to-transparent rounded-full filter blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-yellow-100/30 via-amber-100/20 to-transparent rounded-full filter blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-amber-100/30 via-yellow-100/20 to-transparent dark:from-amber-900/20 dark:via-yellow-900/10 dark:to-transparent rounded-full filter blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-yellow-100/30 via-amber-100/20 to-transparent dark:from-yellow-900/20 dark:via-amber-900/10 dark:to-transparent rounded-full filter blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
 
         {/* Luxury Pattern */}
         <div className="absolute inset-0 opacity-3">
@@ -444,7 +444,7 @@ const Home = () => {
           {[...Array(10)].map((_, i) => (
             <div
               key={i}
-              className="absolute w-2 h-2 bg-amber-300/40 rounded-full animate-pulse"
+              className="absolute w-2 h-2 bg-amber-300/40 dark:bg-amber-700/30 rounded-full animate-pulse"
               style={{
                 left: `${Math.random() * 95}%`,
                 top: `${Math.random() * 95}%`,
@@ -456,8 +456,8 @@ const Home = () => {
           </div>
 
         {/* Corner Decorations */}
-        <div className="absolute top-10 right-10 w-20 h-20 border-4 border-amber-200/30 rounded-tr-full animate-pulse"></div>
-        <div className="absolute bottom-10 left-10 w-24 h-24 border-4 border-amber-200/30 rounded-bl-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute top-10 right-10 w-20 h-20 border-4 border-amber-200/30 dark:border-amber-700/30 rounded-tr-full animate-pulse"></div>
+        <div className="absolute bottom-10 left-10 w-24 h-24 border-4 border-amber-200/30 dark:border-amber-700/30 rounded-bl-full animate-pulse" style={{ animationDelay: '1s' }}></div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Section Header */}
@@ -480,7 +480,7 @@ const Home = () => {
               </span>
             </h2>
 
-            <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
               Mastering modern technologies to build exceptional digital experiences
               with precision, creativity, and technical expertise.
             </p>
@@ -490,7 +490,7 @@ const Home = () => {
           {loading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-                <div key={i} className="bg-white border border-amber-200/50 shadow-xl rounded-3xl h-40 animate-pulse"></div>
+                <div key={i} className="bg-white dark:bg-gray-800 border border-amber-200/50 dark:border-amber-800/30 shadow-xl rounded-3xl h-40 animate-pulse"></div>
               ))}
             </div>
           ) : (
@@ -514,19 +514,19 @@ const Home = () => {
                   className="group relative"
                 >
                   {/* Luxury Card */}
-                  <div className="relative h-full bg-white border border-amber-200/50 rounded-3xl shadow-xl hover:shadow-2xl hover:shadow-amber-200/20 transition-all duration-500 overflow-hidden">
+                  <div className="relative h-full bg-white dark:bg-gray-800 border border-amber-200/50 dark:border-amber-800/30 rounded-3xl shadow-xl hover:shadow-2xl hover:shadow-amber-200/20 dark:hover:shadow-amber-800/20 transition-all duration-500 overflow-hidden">
 
                     {/* Glass Effect Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-amber-50/20 via-transparent to-yellow-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-amber-50/20 via-transparent to-yellow-50/20 dark:from-amber-900/20 dark:via-transparent dark:to-yellow-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
                     {/* Corner Accents */}
-                    <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-amber-100/30 via-yellow-100/20 to-transparent rounded-tl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-tr from-yellow-100/30 via-amber-100/20 to-transparent rounded-br-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-amber-100/30 via-yellow-100/20 to-transparent dark:from-amber-800/30 dark:via-yellow-800/20 dark:to-transparent rounded-tl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-tr from-yellow-100/30 via-amber-100/20 to-transparent dark:from-yellow-800/30 dark:via-amber-800/20 dark:to-transparent rounded-br-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
                     {/* Card Content */}
                     <div className="relative p-8 text-center">
                       {/* Category Name */}
-                      <h3 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-amber-600 transition-colors duration-300">
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors duration-300">
                         {category}
                       </h3>
 
@@ -535,13 +535,13 @@ const Home = () => {
                         {categorySkills.slice(0, 3).map((skill, skillIndex) => (
                           <div
                             key={skill._id}
-                            className="text-sm text-gray-700 group-hover:text-amber-700 transition-colors duration-300"
+                            className="text-sm text-gray-700 dark:text-gray-300 group-hover:text-amber-700 dark:group-hover:text-amber-400 transition-colors duration-300"
                             style={{
                               animationDelay: `${index * 0.1 + skillIndex * 0.05}s`
                             }}
                           >
                             <span className="inline-flex items-center gap-2">
-                              <span className="w-1.5 h-1.5 bg-gradient-to-r from-amber-400 to-yellow-400 rounded-full"></span>
+                              <span className="w-1.5 h-1.5 bg-gradient-to-r from-amber-400 to-yellow-400 dark:from-amber-500 dark:to-yellow-500 rounded-full"></span>
                               {skill.name}
                             </span>
                           </div>
@@ -550,14 +550,14 @@ const Home = () => {
 
                       {/* More Indicator */}
                       {categorySkills.length > 3 && (
-                        <div className="mt-3 text-xs text-amber-600/70 group-hover:text-amber-600 transition-colors duration-300">
+                        <div className="mt-3 text-xs text-amber-600/70 dark:text-amber-400/70 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors duration-300">
                           +{categorySkills.length - 3} more
                         </div>
                       )}
                     </div>
 
                     {/* Hover Shine Effect */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-100/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-100/10 dark:via-amber-800/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
                   </div>
                 </motion.div>
               ))}

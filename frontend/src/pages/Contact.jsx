@@ -86,11 +86,11 @@ const Contact = () => {
   return (
     <div className="min-h-screen py-24 relative overflow-hidden">
       {/* Clean White Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white via-amber-50/30 to-yellow-50/40"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-white via-amber-50/30 to-yellow-50/40 dark:from-gray-900 dark:via-gray-900/95 dark:to-gray-800"></div>
 
       {/* Subtle Accents */}
-      <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-amber-100/30 via-yellow-100/20 to-transparent rounded-full filter blur-3xl animate-pulse"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-yellow-100/30 via-amber-100/20 to-transparent rounded-full filter blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+      <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-amber-100/30 via-yellow-100/20 to-transparent dark:from-amber-900/20 dark:via-yellow-900/10 dark:to-transparent rounded-full filter blur-3xl animate-pulse"></div>
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-yellow-100/30 via-amber-100/20 to-transparent dark:from-yellow-900/20 dark:via-amber-900/10 dark:to-transparent rounded-full filter blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
 
       {/* Luxury Pattern */}
       <div className="absolute inset-0 opacity-3">
@@ -122,7 +122,7 @@ const Contact = () => {
         {[...Array(10)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-2 h-2 bg-amber-300/40 rounded-full animate-pulse"
+            className="absolute w-2 h-2 bg-amber-300/40 dark:bg-amber-700/30 rounded-full animate-pulse"
             style={{
               left: `${Math.random() * 95}%`,
               top: `${Math.random() * 95}%`,
@@ -134,8 +134,8 @@ const Contact = () => {
       </div>
 
       {/* Corner Decorations */}
-      <div className="absolute top-10 right-10 w-20 h-20 border-4 border-amber-200/30 rounded-tr-full animate-pulse"></div>
-      <div className="absolute bottom-10 left-10 w-24 h-24 border-4 border-amber-200/30 rounded-bl-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+      <div className="absolute top-10 right-10 w-20 h-20 border-4 border-amber-200/30 dark:border-amber-700/30 rounded-tr-full animate-pulse"></div>
+      <div className="absolute bottom-10 left-10 w-24 h-24 border-4 border-amber-200/30 dark:border-amber-700/30 rounded-bl-full animate-pulse" style={{ animationDelay: '1s' }}></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -158,7 +158,7 @@ const Contact = () => {
             </span>
           </h1>
 
-          <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
             Have a project in mind or want to collaborate? Feel free to reach out!
           </p>
         </motion.div>
@@ -187,12 +187,12 @@ const Contact = () => {
                 }}
                 className="group"
               >
-                <div className="relative h-full bg-white border border-amber-200/50 rounded-2xl p-6 shadow-lg hover:shadow-xl hover:shadow-amber-200/20 transition-all duration-500">
+                <div className="relative h-full bg-white dark:bg-gray-800 border border-amber-200/50 dark:border-amber-800/30 rounded-2xl p-6 shadow-lg hover:shadow-xl hover:shadow-amber-200/20 dark:hover:shadow-amber-800/20 transition-all duration-500">
                   {/* Hover Effects */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-amber-50/20 via-transparent to-yellow-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-amber-50/20 via-transparent to-yellow-50/20 dark:from-amber-900/20 dark:via-transparent dark:to-yellow-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
 
                   {/* Corner Accent */}
-                  <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-amber-200/30 via-yellow-100/20 to-transparent rounded-tr-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-amber-200/30 via-yellow-100/20 to-transparent dark:from-amber-700/30 dark:via-yellow-700/20 dark:to-transparent rounded-tr-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
                   <div className="relative">
                     <div className="flex items-start gap-4">
@@ -200,25 +200,25 @@ const Contact = () => {
                         <info.icon className="text-white" size={24} />
                       </div>
                       <div>
-                        <h3 className="font-bold text-gray-900 group-hover:text-amber-600 transition-colors duration-300 mb-1">
+                        <h3 className="font-bold text-gray-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors duration-300 mb-1">
                           {info.label}
                         </h3>
                         {info.link ? (
                           <a
                             href={info.link}
-                            className="text-gray-700 hover:text-amber-600 transition-colors duration-300"
+                            className="text-gray-700 dark:text-gray-300 hover:text-amber-600 dark:hover:text-amber-400 transition-colors duration-300"
                           >
                             {info.value}
                           </a>
                         ) : (
-                          <p className="text-gray-700">{info.value}</p>
+                          <p className="text-gray-700 dark:text-gray-300">{info.value}</p>
                         )}
                       </div>
                     </div>
                   </div>
 
                   {/* Hover Shine Effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-100/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 rounded-2xl"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-100/10 dark:via-amber-800/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 rounded-2xl"></div>
                 </div>
               </motion.div>
             ))}
@@ -236,12 +236,12 @@ const Contact = () => {
               }}
               className="group"
             >
-              <div className="relative h-full bg-white border border-amber-200/50 rounded-2xl p-6 shadow-lg hover:shadow-xl hover:shadow-amber-200/20 transition-all duration-500">
+              <div className="relative h-full bg-white dark:bg-gray-800 border border-amber-200/50 dark:border-amber-800/30 rounded-2xl p-6 shadow-lg hover:shadow-xl hover:shadow-amber-200/20 dark:hover:shadow-amber-800/20 transition-all duration-500">
                 {/* Hover Effects */}
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-50/20 via-transparent to-yellow-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-50/20 via-transparent to-yellow-50/20 dark:from-amber-900/20 dark:via-transparent dark:to-yellow-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
 
                 <div className="relative">
-                  <h3 className="font-bold text-gray-900 group-hover:text-amber-600 transition-colors duration-300 mb-4">
+                  <h3 className="font-bold text-gray-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors duration-300 mb-4">
                     Connect With Me
                   </h3>
                   <div className="flex gap-4">
@@ -251,7 +251,7 @@ const Contact = () => {
                         href={social.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`w-12 h-12 bg-gradient-to-br from-amber-100 to-yellow-100 rounded-xl flex items-center justify-center text-amber-700 border border-amber-300/50 ${social.color} transition-all hover:scale-110`}
+                        className={`w-12 h-12 bg-gradient-to-br from-amber-100 to-yellow-100 dark:from-amber-900/50 dark:to-yellow-900/50 rounded-xl flex items-center justify-center text-amber-700 dark:text-amber-400 border border-amber-300/50 dark:border-amber-700/50 ${social.color} transition-all hover:scale-110`}
                         aria-label={social.label}
                       >
                         <social.icon size={20} />
@@ -275,24 +275,24 @@ const Contact = () => {
               }}
               className="group"
             >
-              <div className="relative h-full bg-gradient-to-br from-amber-50 to-yellow-50 border border-amber-200/50 rounded-2xl p-6 shadow-lg hover:shadow-xl hover:shadow-amber-200/20 transition-all duration-500">
+              <div className="relative h-full bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-900/30 dark:to-yellow-900/30 border border-amber-200/50 dark:border-amber-800/30 rounded-2xl p-6 shadow-lg hover:shadow-xl hover:shadow-amber-200/20 dark:hover:shadow-amber-800/20 transition-all duration-500">
                 {/* Hover Effects */}
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-50/20 via-transparent to-yellow-50/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-50/20 via-transparent to-yellow-50/20 dark:from-amber-800/20 dark:via-transparent dark:to-yellow-800/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"></div>
 
                 <div className="relative">
                   <div className="flex items-center gap-3 mb-3">
                     <div className="w-4 h-4 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full animate-pulse shadow-lg"></div>
-                    <h3 className="font-bold text-gray-900 group-hover:text-amber-600 transition-colors duration-300">
+                    <h3 className="font-bold text-gray-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors duration-300">
                       Available for Work
                     </h3>
                   </div>
-                  <p className="text-sm text-gray-700 leading-relaxed">
+                  <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
                     I'm currently available for freelance projects and full-time opportunities.
                   </p>
                 </div>
 
                 {/* Hover Shine Effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-100/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 rounded-2xl"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-100/10 dark:via-amber-800/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 rounded-2xl"></div>
               </div>
             </motion.div>
           </motion.div>
@@ -305,12 +305,12 @@ const Contact = () => {
             transition={{ delay: 0.2, duration: 0.8 }}
             className="lg:col-span-2"
           >
-            <div className="bg-white border border-amber-200/50 rounded-3xl p-8 shadow-xl">
+            <div className="bg-white dark:bg-gray-800 border border-amber-200/50 dark:border-amber-800/30 rounded-3xl p-8 shadow-xl">
               <div className="flex items-center gap-3 mb-6">
-                <div className="p-2 bg-gradient-to-br from-amber-100 to-yellow-100 rounded-lg">
-                  <FiMessageSquare className="text-amber-600" />
+                <div className="p-2 bg-gradient-to-br from-amber-100 to-yellow-100 dark:from-amber-900/50 dark:to-yellow-900/50 rounded-lg">
+                  <FiMessageSquare className="text-amber-600 dark:text-amber-400" />
                 </div>
-                <h2 className="text-2xl font-bold text-gray-900">
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
                   Send Me a Message
                 </h2>
               </div>
@@ -338,7 +338,7 @@ const Contact = () => {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                       Name *
                     </label>
                     <input
@@ -347,12 +347,12 @@ const Contact = () => {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 bg-gradient-to-br from-amber-50 to-yellow-50 border border-amber-200/50 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-300 text-gray-900 placeholder-gray-500"
+                      className="w-full px-4 py-3 bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-gray-700 dark:to-gray-600 border border-amber-200/50 dark:border-amber-700/50 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-300 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                       placeholder="Your name"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                       Email *
                     </label>
                     <input
@@ -361,7 +361,7 @@ const Contact = () => {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 bg-gradient-to-br from-amber-50 to-yellow-50 border border-amber-200/50 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-300 text-gray-900 placeholder-gray-500"
+                      className="w-full px-4 py-3 bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-gray-700 dark:to-gray-600 border border-amber-200/50 dark:border-amber-700/50 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-300 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                       placeholder="your.email@example.com"
                     />
                   </div>
@@ -369,7 +369,7 @@ const Contact = () => {
 
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                       Phone
                     </label>
                     <input
@@ -377,12 +377,12 @@ const Contact = () => {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 bg-gradient-to-br from-amber-50 to-yellow-50 border border-amber-200/50 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-300 text-gray-900 placeholder-gray-500"
+                      className="w-full px-4 py-3 bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-gray-700 dark:to-gray-600 border border-amber-200/50 dark:border-amber-700/50 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-300 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                       placeholder="+91 1234567890"
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                       Company
                     </label>
                     <input
@@ -390,14 +390,14 @@ const Contact = () => {
                       name="company"
                       value={formData.company}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 bg-gradient-to-br from-amber-50 to-yellow-50 border border-amber-200/50 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-300 text-gray-900 placeholder-gray-500"
+                      className="w-full px-4 py-3 bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-gray-700 dark:to-gray-600 border border-amber-200/50 dark:border-amber-700/50 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-300 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                       placeholder="Your company"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                     Subject *
                   </label>
                   <input
@@ -406,13 +406,13 @@ const Contact = () => {
                     value={formData.subject}
                     onChange={handleChange}
                     required
-                    className="w-full px-4 py-3 bg-gradient-to-br from-amber-50 to-yellow-50 border border-amber-200/50 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-300 text-gray-900 placeholder-gray-500"
+                    className="w-full px-4 py-3 bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-gray-700 dark:to-gray-600 border border-amber-200/50 dark:border-amber-700/50 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-300 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
                     placeholder="What's this about?"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                     Message *
                   </label>
                   <textarea
@@ -421,7 +421,7 @@ const Contact = () => {
                     onChange={handleChange}
                     required
                     rows="6"
-                    className="w-full px-4 py-3 bg-gradient-to-br from-amber-50 to-yellow-50 border border-amber-200/50 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-300 text-gray-900 placeholder-gray-500 resize-none"
+                    className="w-full px-4 py-3 bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-gray-700 dark:to-gray-600 border border-amber-200/50 dark:border-amber-700/50 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-300 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 resize-none"
                     placeholder="Tell me about your project or inquiry..."
                   ></textarea>
                 </div>
