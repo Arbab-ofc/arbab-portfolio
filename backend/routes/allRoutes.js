@@ -2,6 +2,18 @@ import express from 'express';
 import { protect, adminOnly } from '../middleware/auth.js';
 import { uploadSingle, uploadMultiple, uploadFields, uploadBlogCover } from '../middleware/upload.js';
 import { contactLimiter, newsletterLimiter, authLimiter } from '../middleware/rateLimiter.js';
+import {
+  validateUserRegistration,
+  validateUserLogin,
+  validatePasswordChange,
+  validateProfileUpdate,
+  validateContactForm,
+  validateBlogPost,
+  validateSearch,
+  validateObjectId,
+  validateQuote,
+  validateFileUpload,
+} from '../middleware/validation.js';
 
 // Import controllers
 import * as authController from '../controllers/authController.js';
@@ -14,33 +26,33 @@ import * as otherControllers from '../controllers/otherControllers.js';
 // ============= AUTH ROUTES =============
 export const authRouter = express.Router();
 
-authRouter.post('/register', authLimiter, authController.register);
-authRouter.post('/login', authLimiter, authController.login);
+authRouter.post('/register', authLimiter, validateUserRegistration, authController.register);
+authRouter.post('/login', authLimiter, validateUserLogin, authController.login);
 authRouter.post('/logout', protect, authController.logout);
 authRouter.post('/refresh', authController.refreshToken);
 authRouter.get('/me', protect, authController.getMe);
-authRouter.put('/updatedetails', protect, authController.updateDetails);
-authRouter.put('/updatepassword', protect, authController.updatePassword);
+authRouter.put('/updatedetails', protect, validateProfileUpdate, authController.updateDetails);
+authRouter.put('/updatepassword', protect, validatePasswordChange, authController.updatePassword);
 
 // ============= BLOG ROUTES =============
 export const blogRouter = express.Router();
 
-blogRouter.get('/', blogController.getBlogs);
+blogRouter.get('/', validateSearch, blogController.getBlogs);
 blogRouter.get('/categories', blogController.getCategories);
-blogRouter.get('/search', blogController.searchBlogs);
+blogRouter.get('/search', validateSearch, blogController.searchBlogs);
 blogRouter.get('/:slug', blogController.getBlog);
-blogRouter.post('/:id/like', blogController.likeBlog);
-blogRouter.post('/:id/comments', blogController.addComment);
+blogRouter.post('/:id/like', validateObjectId('id'), blogController.likeBlog);
+blogRouter.post('/:id/comments', validateObjectId('id'), blogController.addComment);
 
 // Admin routes
-blogRouter.post('/', protect, adminOnly, (req, res, next) => {
+blogRouter.post('/', protect, adminOnly, validateBlogPost, (req, res, next) => {
   // Conditional middleware: only use uploadBlogCover if files are being uploaded
   if (req.headers['content-type']?.startsWith('multipart/form-data')) {
     return uploadBlogCover(req, res, next);
   }
   next();
 }, blogController.createBlog);
-blogRouter.put('/:id', protect, adminOnly, (req, res, next) => {
+blogRouter.put('/:id', protect, adminOnly, validateObjectId('id'), validateBlogPost, (req, res, next) => {
   // Conditional middleware: only use uploadBlogCover if files are being uploaded
   if (req.headers['content-type']?.startsWith('multipart/form-data')) {
     return uploadBlogCover(req, res, next);
@@ -49,8 +61,8 @@ blogRouter.put('/:id', protect, adminOnly, (req, res, next) => {
 }, blogController.updateBlog);
 
 // Admin-only routes
-blogRouter.get('/admin/all', protect, adminOnly, blogController.getAdminBlogs);
-blogRouter.delete('/:id', protect, adminOnly, blogController.deleteBlog);
+blogRouter.get('/admin/all', protect, adminOnly, validateSearch, blogController.getAdminBlogs);
+blogRouter.delete('/:id', protect, adminOnly, validateObjectId('id'), blogController.deleteBlog);
 
 // ============= SKILL ROUTES =============
 export const skillRouter = express.Router();
@@ -71,11 +83,11 @@ experienceRouter.delete('/:id', protect, adminOnly, experienceController.deleteE
 // ============= CONTACT ROUTES =============
 export const contactRouter = express.Router();
 
-contactRouter.post('/', contactLimiter, contactController.submitContact);
-contactRouter.get('/', protect, adminOnly, contactController.getContacts);
-contactRouter.get('/:id', protect, adminOnly, contactController.getContact);
-contactRouter.put('/:id', protect, adminOnly, contactController.updateContact);
-contactRouter.delete('/:id', protect, adminOnly, contactController.deleteContact);
+contactRouter.post('/', contactLimiter, validateContactForm, contactController.submitContact);
+contactRouter.get('/', protect, adminOnly, validateSearch, contactController.getContacts);
+contactRouter.get('/:id', protect, adminOnly, validateObjectId('id'), contactController.getContact);
+contactRouter.put('/:id', protect, adminOnly, validateObjectId('id'), contactController.updateContact);
+contactRouter.delete('/:id', protect, adminOnly, validateObjectId('id'), contactController.deleteContact);
 
 // ============= NEWSLETTER ROUTES =============
 export const newsletterRouter = express.Router();

@@ -38,15 +38,65 @@ import { apiLimiter } from './middleware/rateLimiter.js';
 // Connect to database
 connectDB();
 
+// Production-ready CORS configuration
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+
+    // In production, only allow specific origins
+    if (process.env.NODE_ENV === 'production') {
+      const allowedOrigins = (process.env.CORS_ORIGIN || process.env.FRONTEND_URL || 'https://yourdomain.com').split(',');
+      if (allowedOrigins.indexOf(origin) !== -1) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    } else {
+      // In development, allow localhost and common ports
+      const allowedDevOrigins = [
+        'http://localhost:5173',
+        'http://localhost:3000',
+        'http://localhost:5174',
+        'http://localhost:5175',
+        'http://localhost:5176',
+        'http://127.0.0.1:5173',
+        'http://127.0.0.1:3000',
+      ];
+      if (allowedDevOrigins.indexOf(origin) !== -1 || origin.startsWith('http://localhost:')) {
+        callback(null, true);
+      } else {
+        callback(new Error('Not allowed by CORS'));
+      }
+    }
+  },
+  credentials: process.env.CORS_CREDENTIALS === 'true' || true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: [
+    'Origin',
+    'X-Requested-With',
+    'Content-Type',
+    'Accept',
+    'Authorization',
+    'Cache-Control',
+    'Pragma'
+  ],
+  exposedHeaders: ['X-Total-Count', 'X-Page-Count'],
+  maxAge: 86400, // 24 hours
+  optionsSuccessStatus: 204
+};
+
 // Initialize express app
 const app = express();
 const httpServer = createServer(app);
 
-// Initialize Socket.io
+// Initialize Socket.io with production-ready CORS
 const io = new Server(httpServer, {
   cors: {
-    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
-    credentials: true,
+    origin: corsOptions.origin,
+    credentials: corsOptions.credentials,
+    methods: corsOptions.methods,
+    allowedHeaders: corsOptions.allowedHeaders,
   },
 });
 
@@ -90,11 +140,7 @@ app.use(helmet({
 }));
 app.use(mongoSanitize());
 
-// CORS
-app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
-  credentials: true,
-}));
+app.use(cors(corsOptions));
 
 // Compression
 app.use(compression());
