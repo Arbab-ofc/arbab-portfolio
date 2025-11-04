@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { FiCalendar, FiClock, FiTag, FiSearch, FiFilter } from 'react-icons/fi';
+import { FiSearch, FiFilter } from 'react-icons/fi';
 import { blogsAPI } from '../utils/api';
+import BlogCard from '../components/blog/BlogCard';
 
 const Blog = () => {
   const [blogs, setBlogs] = useState([]);
@@ -220,110 +221,15 @@ const Blog = () => {
             </p>
           </motion.div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
             {filteredBlogs.map((blog, index) => (
-              <motion.article
+              <BlogCard
                 key={blog._id}
-                initial={{ opacity: 0, y: 30, scale: 0.95 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{
-                  duration: 0.6,
-                  delay: index * 0.15,
-                  type: "spring"
-                }}
-                whileHover={{
-                  y: -8,
-                  scale: 1.03,
-                  transition: { duration: 0.3 }
-                }}
-                className="group"
-              >
-                <div className="relative h-full bg-white dark:bg-gray-800 border border-amber-200/50 dark:border-amber-800/30 rounded-3xl shadow-xl hover:shadow-2xl hover:shadow-amber-200/20 dark:hover:shadow-amber-800/20 transition-all duration-500 overflow-hidden">
-                  {/* Glass Effect Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-amber-50/20 via-transparent to-yellow-50/20 dark:from-amber-900/20 dark:via-transparent dark:to-yellow-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-                  {/* Corner Accents */}
-                  <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-amber-100/30 via-yellow-100/20 to-transparent dark:from-amber-800/30 dark:via-yellow-800/20 dark:to-transparent rounded-tl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="absolute bottom-0 left-0 w-16 h-16 bg-gradient-to-tr from-yellow-100/30 via-amber-100/20 to-transparent dark:from-yellow-800/30 dark:via-amber-800/20 dark:to-transparent rounded-br-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-
-                  {/* Cover Image */}
-                  <div className="h-56 bg-gradient-to-br from-amber-500 via-yellow-500 to-amber-600 relative overflow-hidden">
-                    {blog.coverImage?.url ? (
-                      <img
-                        src={blog.coverImage.url}
-                        alt={blog.title}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <span className="text-white text-7xl font-bold opacity-50">
-                          {blog.title.charAt(0)}
-                        </span>
-                      </div>
-                    )}
-                    {blog.featured && (
-                      <div className="absolute top-4 right-4 bg-amber-400/20 backdrop-blur-sm border border-amber-400/30 text-amber-800 dark:text-amber-200 px-3 py-1 rounded-full text-xs font-bold">
-                        ⭐ Featured
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Content */}
-                  <div className="relative p-6 space-y-4">
-                    <div className="flex items-start justify-between mb-3">
-                      <h3 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors duration-300 line-clamp-2">
-                        {blog.title}
-                      </h3>
-                      <span className="px-3 py-1 bg-gradient-to-r from-amber-100 to-yellow-100 dark:from-amber-900/50 dark:to-yellow-900/50 text-amber-700 dark:text-amber-400 rounded-full text-xs font-medium border border-amber-300/50 dark:border-amber-700/50">
-                        {blog.category}
-                      </span>
-                    </div>
-
-                    <p className="text-gray-700 dark:text-gray-300 line-clamp-3 leading-relaxed">
-                      {blog.excerpt}
-                    </p>
-
-                    {/* Meta Info */}
-                    <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
-                      <div className="flex items-center gap-1">
-                        <FiCalendar size={16} className="text-amber-500 dark:text-amber-400" />
-                        <span>{formatDate(blog.publishedAt || blog.createdAt)}</span>
-                      </div>
-                      <div className="flex items-center gap-1">
-                        <FiClock size={16} className="text-amber-500 dark:text-amber-400" />
-                        <span>{blog.readTime} min read</span>
-                      </div>
-                    </div>
-
-                    {/* Tags */}
-                    {blog.tags && blog.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-2">
-                        {blog.tags.slice(0, 3).map((tag) => (
-                          <span
-                            key={tag}
-                            className="flex items-center gap-1 px-2 py-1 bg-gradient-to-r from-amber-100 to-yellow-100 dark:from-amber-900/50 dark:to-yellow-900/50 text-amber-700 dark:text-amber-400 rounded-full text-xs font-medium border border-amber-300/50 dark:border-amber-700/50"
-                          >
-                            <FiTag size={12} />
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-
-                    {/* Read More Link */}
-                    <Link
-                      to={`/blog/${blog.slug}`}
-                      className="flex-1 px-4 py-2 bg-gradient-to-r from-amber-500 to-yellow-500 text-white rounded-xl hover:from-amber-600 hover:to-yellow-600 transition-all text-center text-sm font-medium shadow-lg hover:shadow-amber-500/30"
-                    >
-                      Read Article
-                    </Link>
-                  </div>
-
-                  {/* Hover Shine Effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-100/10 dark:via-amber-800/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-                </div>
-              </motion.article>
+                blog={blog}
+                index={index}
+                variant={blog.featured ? 'featured' : 'default'}
+                className="h-full"
+              />
             ))}
           </div>
         )}

@@ -92,11 +92,24 @@ export const createBlog = async (req, res) => {
   try {
     // Handle cover image upload
     if (req.file) {
-      const result = await uploadToCloudinary(req.file, 'portfolio/blogs');
-      req.body.coverImage = {
-        url: result.url,
-        publicId: result.publicId,
-      };
+      console.log('Processing cover image upload:', {
+        filename: req.file.filename,
+        path: req.file.path,
+        mimetype: req.file.mimetype,
+        size: req.file.size
+      });
+
+      try {
+        const result = await uploadToCloudinary(req.file, 'portfolio/blogs');
+        req.body.coverImage = {
+          url: result.url,
+          publicId: result.publicId,
+        };
+        console.log('Cloudinary upload successful:', result.publicId);
+      } catch (uploadError) {
+        console.error('Cloudinary upload failed:', uploadError);
+        throw uploadError;
+      }
     }
 
     const blog = await Blog.create(req.body);
@@ -131,16 +144,30 @@ export const updateBlog = async (req, res) => {
 
     // Handle new cover image
     if (req.file) {
+      console.log('Processing new cover image upload:', {
+        filename: req.file.filename,
+        path: req.file.path,
+        mimetype: req.file.mimetype,
+        size: req.file.size
+      });
+
       // Delete old image if exists
       if (blog.coverImage?.publicId) {
+        console.log('Deleting old cover image:', blog.coverImage.publicId);
         await deleteFromCloudinary(blog.coverImage.publicId);
       }
 
-      const result = await uploadToCloudinary(req.file, 'portfolio/blogs');
-      req.body.coverImage = {
-        url: result.url,
-        publicId: result.publicId,
-      };
+      try {
+        const result = await uploadToCloudinary(req.file, 'portfolio/blogs');
+        req.body.coverImage = {
+          url: result.url,
+          publicId: result.publicId,
+        };
+        console.log('Cloudinary upload successful:', result.publicId);
+      } catch (uploadError) {
+        console.error('Cloudinary upload failed:', uploadError);
+        throw uploadError;
+      }
     }
 
     blog = await Blog.findByIdAndUpdate(req.params.id, req.body, {
@@ -322,6 +349,62 @@ export const searchBlogs = async (req, res) => {
     res.status(500).json({
       success: false,
       message: 'Error searching blogs',
+      error: error.message,
+    });
+  }
+};
+
+// @desc    Get all blogs for admin (published + unpublished)
+// @route   GET /api/blogs/admin/all
+// @access  Private/Admin
+export const getAdminBlogs = async (req, res) => {
+  try {
+    const {
+      limit = 50,
+      page = 1,
+      sort = '-createdAt',
+      search,
+      category,
+      published,
+    } = req.query;
+
+    // Build query - NO default published filter for admin
+    const query = {};
+
+    // Optional filters for admin
+    if (published !== undefined && published !== '') {
+      query.published = published === 'true';
+    }
+
+    if (category) query.category = category;
+
+    if (search) {
+      query.$or = [
+        { title: { $regex: search, $options: 'i' } },
+        { excerpt: { $regex: search, $options: 'i' } },
+        { content: { $regex: search, $options: 'i' } },
+      ];
+    }
+
+    const blogs = await Blog.find(query)
+      .sort(sort)
+      .limit(parseInt(limit))
+      .skip((parseInt(page) - 1) * parseInt(limit));
+
+    const total = await Blog.countDocuments(query);
+
+    res.status(200).json({
+      success: true,
+      count: blogs.length,
+      total,
+      page: parseInt(page),
+      pages: Math.ceil(total / parseInt(limit)),
+      data: blogs,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Error fetching admin blogs',
       error: error.message,
     });
   }

@@ -44,4 +44,7 @@ export const uploadFields = upload.fields([
   { name: 'avatar', maxCount: 1 },
 ]);
 
+// Custom upload middleware for blog cover images
+export const uploadBlogCover = upload.single('coverImage');
+
 export default upload;

@@ -18,13 +18,16 @@ import {
   HiMail,
   HiCloudUpload,
   HiPaperAirplane,
+  HiPencil,
+  HiTrash,
+  HiEye,
   HiDatabase,
   HiDocument,
   HiPlus,
   HiSparkles,
-  HiPencil,
-  HiTrash,
   HiHome,
+  HiPhotograph,
+  HiX,
 } from 'react-icons/hi';
 
 const AdminDashboard = () => {
@@ -48,11 +51,19 @@ const AdminDashboard = () => {
   const [formError, setFormError] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [slugManuallyEdited, setSlugManuallyEdited] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [uploadingImage, setUploadingImage] = useState(false);
 
   // Project management state
   const [showProjectModal, setShowProjectModal] = useState(false);
   const [editingProject, setEditingProject] = useState(null);
   const [projectSubmitting, setProjectSubmitting] = useState(false);
+
+  // Blog management state
+  const [editingBlog, setEditingBlog] = useState(null);
 
   const experienceTypes = ['Full-time', 'Part-time', 'Freelance', 'Contract', 'Internship'];
   const blogCategories = ['Tutorial', 'Best Practices', 'Case Study', 'Tech Review', 'Career', 'Other'];
@@ -240,7 +251,7 @@ const AdminDashboard = () => {
       const [analyticsRes, projectsRes, blogsRes, contactsRes, skillsRes, experienceRes, quotesRes, resumesRes] = await Promise.all([
         fetchWithRetry(() => analyticsAPI.getOverview()).catch(() => ({ data: { totalVisits: 0, uniqueVisitors: 0, deviceStats: [], topPages: [] } })),
         fetchWithRetry(() => projectsAPI.getAll()),
-        fetchWithRetry(() => blogsAPI.getAll()),
+        fetchWithRetry(() => blogsAPI.getAllForAdmin()),
         fetchWithRetry(() => contactAPI.getAll()),
         fetchWithRetry(() => skillsAPI.getAll()),
         fetchWithRetry(() => experienceAPI.getAll()),
@@ -276,20 +287,27 @@ const AdminDashboard = () => {
       setFormData({});
       setFormError('');
       setSlugManuallyEdited(false);
+      setEditingBlog(null); // Clear editing blog when modal is closed
+      setEditMode(false);
+      resetImageState();
       return;
     }
 
-    if (createType === 'experience') {
-      setFormData({ ...initialFormData.experience });
-      setSlugManuallyEdited(false);
-    } else if (createType === 'blog') {
-      setFormData({ ...initialFormData.blog });
-      setSlugManuallyEdited(false);
-    } else {
-      setFormData({});
-      setSlugManuallyEdited(false);
+    // Only set form data if not in edit mode (edit mode data is set by edit button)
+    if (!editingBlog) {
+      if (createType === 'experience') {
+        setFormData({ ...initialFormData.experience });
+        setSlugManuallyEdited(false);
+      } else if (createType === 'blog') {
+        setFormData({ ...initialFormData.blog });
+        setSlugManuallyEdited(false);
+      } else {
+        setFormData({});
+        setSlugManuallyEdited(false);
+      }
     }
     setFormError('');
+    resetImageState();
   }, [showCreateModal, createType]);
 
   const handleInputChange = (event) => {
@@ -317,6 +335,49 @@ const AdminDashboard = () => {
     if (createType === 'blog' && name === 'slug') {
       setSlugManuallyEdited(true);
     }
+  };
+
+  // Image handling functions
+  const resetImageState = () => {
+    setSelectedFile(null);
+    setImagePreview(null);
+    setUploadingImage(false);
+    // Don't clear editingBlog here - it should only be cleared when modal is closed
+    // Reset the file input
+    const fileInput = document.getElementById('cover-image-upload');
+    if (fileInput) {
+      fileInput.value = '';
+    }
+  };
+
+  const handleImageSelect = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      // Validate file size (5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        alert('File size must be less than 5MB');
+        return;
+      }
+
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        alert('Please select an image file');
+        return;
+      }
+
+      setSelectedFile(file);
+
+      // Create preview
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleImageRemove = () => {
+    resetImageState();
   };
 
   const handleCreateSubmit = async (event) => {
@@ -367,6 +428,7 @@ const AdminDashboard = () => {
         }
 
         setShowCreateModal(false);
+        resetImageState();
       } else if (createType === 'blog') {
         const title = sanitizeString(formData.title);
         const excerpt = sanitizeString(formData.excerpt);
@@ -375,33 +437,80 @@ const AdminDashboard = () => {
         const slugSource = formData.slug || title;
         const slug = generateSlug(slugSource);
 
-        if (!title || !excerpt || !content || !category) {
-          setFormError('Title, excerpt, category, and content are required.');
+        // Valid categories from Blog model
+        const validCategories = ['Tutorial', 'Best Practices', 'Case Study', 'Tech Review', 'Career', 'Other'];
+
+        // Enhanced validation
+        if (!title || title.trim().length < 3) {
+          setFormError('Title is required and must be at least 3 characters long.');
           setSubmitting(false);
           return;
         }
 
-        if (!slug) {
-          setFormError('Unable to generate a slug. Please provide a valid title or slug.');
+        if (!excerpt || excerpt.trim().length < 10) {
+          setFormError('Excerpt is required and must be at least 10 characters long.');
           setSubmitting(false);
           return;
         }
 
-        const payload = {
-          title,
-          slug,
-          excerpt,
-          content,
-          category,
-          tags: formData.tags ? parseListField(formData.tags) : [],
-          featured: !!formData.featured,
-          published: !!formData.published,
-        };
-
-        if (payload.published && !formData.publishedAt) {
-          payload.publishedAt = new Date().toISOString();
+        if (excerpt.length > 300) {
+          setFormError('Excerpt cannot exceed 300 characters.');
+          setSubmitting(false);
+          return;
         }
 
+        if (!content || content.trim().length < 50) {
+          setFormError('Content is required and must be at least 50 characters long.');
+          setSubmitting(false);
+          return;
+        }
+
+        if (!category) {
+          setFormError('Category is required.');
+          setSubmitting(false);
+          return;
+        }
+
+        if (!validCategories.includes(category)) {
+          setFormError(`Invalid category. Must be one of: ${validCategories.join(', ')}`);
+          setSubmitting(false);
+          return;
+        }
+
+        if (!slug || slug.trim().length < 3) {
+          setFormError('Unable to generate a valid slug. Please provide a valid title or custom slug (minimum 3 characters).');
+          setSubmitting(false);
+          return;
+        }
+
+        // Validate cover image requirement - only required for new blogs, not updates
+        if (!editingBlog && !selectedFile) {
+          setFormError('Cover image is required. Please upload an image for your blog post.');
+          setSubmitting(false);
+          return;
+        }
+
+        // Create FormData for file upload
+        const formDataToSend = new FormData();
+
+        // Add all blog fields
+        formDataToSend.append('title', title);
+        formDataToSend.append('slug', slug);
+        formDataToSend.append('excerpt', excerpt);
+        formDataToSend.append('content', content);
+        formDataToSend.append('category', category);
+        formDataToSend.append('featured', !!formData.featured);
+        formDataToSend.append('published', !!formData.published);
+
+        if (formData.tags) {
+          formDataToSend.append('tags', JSON.stringify(parseListField(formData.tags)));
+        }
+
+        if (formData.published && !formData.publishedAt && !editingBlog) {
+          formDataToSend.append('publishedAt', new Date().toISOString());
+        }
+
+        // Add SEO metadata if provided
         const seoMeta = {
           metaTitle: sanitizeString(formData.seoTitle),
           metaDescription: sanitizeString(formData.seoDescription),
@@ -409,23 +518,89 @@ const AdminDashboard = () => {
         };
 
         if (seoMeta.metaTitle || seoMeta.metaDescription || (seoMeta.keywords && seoMeta.keywords.length)) {
-          payload.seo = {
+          formDataToSend.append('seo', JSON.stringify({
             ...(seoMeta.metaTitle ? { metaTitle: seoMeta.metaTitle } : {}),
             ...(seoMeta.metaDescription ? { metaDescription: seoMeta.metaDescription } : {}),
             ...(seoMeta.keywords && seoMeta.keywords.length ? { keywords: seoMeta.keywords } : {}),
-          };
+          }));
         }
 
-        const response = await blogsAPI.create(payload);
-        const newBlog = response.data?.data;
-
-        if (newBlog) {
-          setBlogs(prev => sortBlogsList([...(prev || []), newBlog]));
-        } else {
-          await fetchDashboardData();
+        // Add cover image if selected (for both create and update)
+        if (selectedFile) {
+          formDataToSend.append('coverImage', selectedFile);
         }
 
-        setShowCreateModal(false);
+        try {
+          setUploadingImage(true);
+
+          let response;
+          let updatedBlog;
+
+          if (editingBlog) {
+            // Update existing blog
+            response = await blogsAPI.update(editingBlog._id, formDataToSend);
+            updatedBlog = response.data?.data;
+
+            if (updatedBlog) {
+              setBlogs(prev => sortBlogsList(prev.map(blog =>
+                blog._id === editingBlog._id ? updatedBlog : blog
+              )));
+            } else {
+              await fetchDashboardData();
+            }
+          } else {
+            // Create new blog
+            response = await blogsAPI.create(formDataToSend);
+            updatedBlog = response.data?.data;
+
+            if (updatedBlog) {
+              setBlogs(prev => sortBlogsList([...(prev || []), updatedBlog]));
+            } else {
+              await fetchDashboardData();
+            }
+          }
+
+          setShowCreateModal(false);
+          resetImageState();
+        } catch (apiError) {
+          console.error('Blog operation API error:', apiError);
+
+          // Enhanced error handling
+          if (apiError.response) {
+            // Server responded with error status
+            const { status, data } = apiError.response;
+
+            if (status === 400) {
+              // Validation error
+              if (data?.message) {
+                setFormError(`Validation error: ${data.message}`);
+              } else if (data?.errors) {
+                const errorMessages = Object.values(data.errors).flat();
+                setFormError(`Validation failed: ${errorMessages.join(', ')}`);
+              } else {
+                setFormError('Invalid blog data. Please check all fields and try again.');
+              }
+            } else if (status === 409) {
+              // Conflict (duplicate slug)
+              setFormError('A blog with this slug already exists. Please use a different title or slug.');
+            } else if (status === 413) {
+              // Payload too large
+              setFormError('Blog content is too large. Please reduce the content length.');
+            } else {
+              setFormError(`Server error (${status}): ${data?.message || 'Unknown error occurred'}`);
+            }
+          } else if (apiError.request) {
+            // Network error
+            setFormError('Network error. Please check your internet connection and try again.');
+          } else {
+            // Other error
+            setFormError(`Unexpected error: ${apiError.message}`);
+          }
+
+          setSubmitting(false);
+          setUploadingImage(false);
+          return;
+        }
       } else if (createType === 'quote') {
         const payload = {
           text: sanitizeString(formData.text),
@@ -474,6 +649,7 @@ const AdminDashboard = () => {
         }
 
         setShowCreateModal(false);
+        resetImageState();
       } else {
         setFormError('Creation flow for this content type is not implemented yet.');
       }
@@ -834,16 +1010,89 @@ const AdminDashboard = () => {
           </div>
           <div className="mt-6 space-y-3">
             {blogs.slice(0, 5).map(blog => (
-              <div key={blog._id} className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
-                <div className="min-w-0">
-                  <p className="truncate text-sm font-semibold text-white/80">{blog.title}</p>
-                  <p className="text-xs text-white/50">Published {new Date(blog.createdAt).toLocaleDateString()}</p>
+              <div key={blog._id} className="flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 px-4 py-3 group hover:bg-white/10 transition-colors duration-200">
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm font-semibold text-white/80 group-hover:text-white/90 transition-colors">
+                    {blog.title}
+                  </p>
+                  <p className="text-xs text-white/50">
+                    {blog.published ? 'Published' : 'Draft'} {new Date(blog.createdAt || blog.publishedAt).toLocaleDateString()}
+                  </p>
+                  {blog.category && (
+                    <span className="inline-block px-2 py-0.5 bg-amber-500/20 text-amber-400 text-xs rounded-full mt-1">
+                      {blog.category}
+                    </span>
+                  )}
                 </div>
-                <HiDocumentText className="text-lg text-white/40" />
+
+                {/* Action Buttons */}
+                <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                  {/* View Blog */}
+                  <button
+                    onClick={() => window.open(`/blog/${blog.slug}`, '_blank')}
+                    className="p-1.5 rounded-lg bg-white/10 hover:bg-white/20 border border-white/20 text-white/70 hover:text-white/90 transition-all duration-200"
+                    title="View blog"
+                  >
+                    <HiEye className="w-4 h-4" />
+                  </button>
+
+                  {/* Edit Blog */}
+                  <button
+                    onClick={() => {
+                      setEditingBlog(blog);
+                      setEditMode(true);
+                      setCreateType('blog');
+                      // Pre-fill form data with blog data
+                      const blogFormData = {
+                        title: blog.title || '',
+                        slug: blog.slug || '',
+                        excerpt: blog.excerpt || '',
+                        content: blog.content || '',
+                        category: blog.category || 'Tutorial',
+                        tags: blog.tags?.join(', ') || '',
+                        featured: blog.featured || false,
+                        published: blog.published || false,
+                        seoTitle: blog.seo?.metaTitle || '',
+                        seoDescription: blog.seo?.metaDescription || '',
+                        seoKeywords: blog.seo?.keywords?.join(', ') || '',
+                        publishedAt: blog.publishedAt || blog.createdAt || '',
+                      };
+                      setFormData(blogFormData);
+                      setSlugManuallyEdited(true); // Don't auto-generate slug when editing
+                      setShowCreateModal(true);
+                    }}
+                    className="p-1.5 rounded-lg bg-white/10 hover:bg-blue-500/20 border border-white/20 text-white/70 hover:text-blue-400 transition-all duration-200"
+                    title="Edit blog"
+                  >
+                    <HiPencil className="w-4 h-4" />
+                  </button>
+
+                  {/* Delete Blog */}
+                  <button
+                    onClick={() => {
+                      setDeleteTarget(blog);
+                      setShowDeleteModal(true);
+                    }}
+                    className="p-1.5 rounded-lg bg-white/10 hover:bg-red-500/20 border border-white/20 text-white/70 hover:text-red-400 transition-all duration-200"
+                    title="Delete blog"
+                  >
+                    <HiTrash className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
             ))}
             {blogs.length > 5 && (
-              <p className="text-xs text-white/60">...and {blogs.length - 5} more stories</p>
+              <p className="text-xs text-white/60 text-center py-2">
+                ...and {blogs.length - 5} more stories
+                {blogs.length > 5 && (
+                  <button
+                    onClick={() => navigate('/admin/blog-management')}
+                    className="text-amber-400 hover:text-amber-300 underline ml-2"
+                  >
+                    View all
+                  </button>
+                )}
+              </p>
             )}
           </div>
         </div>
@@ -1136,10 +1385,7 @@ const AdminDashboard = () => {
                     </span>
                     <span className="text-sm font-semibold text-white/90">{tab.label}</span>
                   </span>
-                  {isActive && (
-                    <span className="rounded-full bg-sky-500/20 px-3 py-1 text-xs text-sky-100">Active</span>
-                  )}
-                </button>
+                  </button>
               );
             })}
           </div>
@@ -1156,9 +1402,14 @@ const AdminDashboard = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4 py-10 backdrop-blur-md">
           <div className="w-full max-w-3xl overflow-hidden rounded-3xl border border-white/10 bg-slate-900/80 shadow-2xl backdrop-blur-2xl">
             <div className="sticky top-0 flex items-center justify-between border-b border-white/10 bg-white/5 px-6 py-4">
-              <h3 className="text-lg font-semibold text-white">{editMode ? 'Edit' : 'Create New'} {createType}</h3>
+              <h3 className="text-lg font-semibold text-white">
+                {editingBlog ? 'Edit Blog Post' : createType === 'blog' ? 'Create New Blog Post' : `Create New ${createType}`}
+              </h3>
               <button
-                onClick={() => setShowCreateModal(false)}
+                onClick={() => {
+                  setShowCreateModal(false);
+                  resetImageState();
+                }}
                 className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-white/70 transition hover:border-white/30 hover:text-white"
               >
                 Close
@@ -1292,6 +1543,87 @@ const AdminDashboard = () => {
                       onChange={handleInputChange}
                       className="md:col-span-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white focus:border-sky-400 focus:outline-none"
                     />
+
+                    {/* Cover Image Upload */}
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-medium text-white/80 mb-2">
+                        Cover Image {editingBlog ? '(Optional - leave empty to keep current)' : <span className="text-red-400">*</span>}
+                      </label>
+                      <div className="space-y-4">
+                        {/* Current Image Display (for editing) */}
+                        {editingBlog && editingBlog.coverImage?.url && !imagePreview && (
+                          <div className="relative">
+                            <div className="flex items-center justify-between mb-2">
+                              <span className="text-sm text-white/60">Current cover image:</span>
+                            </div>
+                            <img
+                              src={editingBlog.coverImage.url}
+                              alt="Current cover"
+                              className="w-full h-48 object-cover rounded-xl border border-white/10"
+                            />
+                          </div>
+                        )}
+
+                        {/* File Input */}
+                        <div className="relative">
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageSelect}
+                            className="hidden"
+                            id="cover-image-upload"
+                            required={!editingBlog}
+                          />
+                          <label
+                            htmlFor="cover-image-upload"
+                            className="flex items-center justify-center w-full px-4 py-3 border-2 border-dashed border-white/20 rounded-xl cursor-pointer hover:border-white/40 transition-colors duration-200 bg-white/5 hover:bg-white/10"
+                          >
+                            <div className="flex items-center gap-3">
+                              <HiPhotograph className="w-5 h-5 text-white/60" />
+                              <span className="text-sm text-white/80">
+                                {selectedFile ? selectedFile.name : (editingBlog ? 'Choose new cover image (optional)' : 'Choose cover image')}
+                              </span>
+                            </div>
+                          </label>
+                        </div>
+
+                        {/* Image Preview */}
+                        {imagePreview && (
+                          <div className="relative">
+                            <div className="flex items-center justify-between mb-2">
+                              <span className="text-sm text-white/60">New cover image preview:</span>
+                              <button
+                                type="button"
+                                onClick={handleImageRemove}
+                                className="text-xs text-red-400 hover:text-red-300"
+                              >
+                                Remove new image
+                              </button>
+                            </div>
+                            <img
+                              src={imagePreview}
+                              alt="New cover preview"
+                              className="w-full h-48 object-cover rounded-xl border border-white/10"
+                            />
+                            {uploadingImage && (
+                              <div className="absolute inset-0 bg-black/50 rounded-xl flex items-center justify-center">
+                                <div className="flex items-center gap-2 text-white">
+                                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                                  <span className="text-sm">Uploading...</span>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        )}
+
+                        <p className="text-xs text-white/60">
+                          {editingBlog
+                            ? 'Optional: Upload a new cover image to replace the current one. Accepted formats: JPG, PNG, GIF, WebP. Max size: 5MB.'
+                            : 'Required: Upload a cover image for your blog post. Accepted formats: JPG, PNG, GIF, WebP. Max size: 5MB.'
+                          }
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 )}
 
@@ -1509,9 +1841,12 @@ const AdminDashboard = () => {
                           name="active"
                           checked={formData.active !== undefined ? !!formData.active : true}
                           onChange={handleInputChange}
-                          className="h-4 w-4 rounded border-white/20 bg-transparent text-sky-500 focus:ring-sky-500"
+                          className="h-4 w-4 rounded border-white/20 bg-transparent text-green-500 focus:ring-green-500"
                         />
-                        Active
+                        <span className="flex items-center gap-1.5 font-mono">
+                          <span className="text-green-400">●</span>
+                          <span>Enable</span>
+                        </span>
                       </label>
                     </div>
                     <input
@@ -1557,17 +1892,68 @@ const AdminDashboard = () => {
                     disabled={submitting}
                     className={`inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-sky-500 to-cyan-500 px-6 py-2 text-sm font-semibold text-white shadow-lg shadow-sky-500/30 transition hover:from-sky-400 hover:to-cyan-400 ${submitting ? 'cursor-not-allowed opacity-60' : ''}`}
                   >
-                    {submitting ? (editMode ? 'Updating...' : 'Creating...') : (editMode ? 'Update' : 'Create')}
+                    {submitting ? (editingBlog ? 'Updating...' : 'Creating...') : (editingBlog ? 'Update Blog Post' : 'Create Blog Post')}
                   </button>
                   <button
                     type="button"
-                    onClick={() => setShowCreateModal(false)}
+                    onClick={() => {
+                      setShowCreateModal(false);
+                      resetImageState();
+                    }}
                     className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-6 py-2 text-sm font-semibold text-white/80 transition hover:border-white/30 hover:bg-white/10"
                   >
                     Cancel
                   </button>
                 </div>
               </form>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {showDeleteModal && deleteTarget && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 max-w-md w-full shadow-2xl">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center">
+                <HiTrash className="w-5 h-5 text-red-600 dark:text-red-400" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                Delete Blog Post
+              </h3>
+            </div>
+
+            <p className="text-gray-600 dark:text-gray-300 mb-6">
+              Are you sure you want to delete "{deleteTarget.title}"? This action cannot be undone.
+            </p>
+
+            <div className="flex gap-3 justify-end">
+              <button
+                onClick={() => {
+                  setShowDeleteModal(false);
+                  setDeleteTarget(null);
+                }}
+                className="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={async () => {
+                  try {
+                    await blogsAPI.delete(deleteTarget._id);
+                    setBlogs(prev => prev.filter(blog => blog._id !== deleteTarget._id));
+                    setShowDeleteModal(false);
+                    setDeleteTarget(null);
+                  } catch (error) {
+                    console.error('Error deleting blog:', error);
+                    // You could show an error message here
+                  }
+                }}
+                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-200"
+              >
+                Delete
+              </button>
             </div>
           </div>
         </div>

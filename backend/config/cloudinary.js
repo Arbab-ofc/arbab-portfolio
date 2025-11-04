@@ -12,7 +12,18 @@ cloudinary.config({
 
 export const uploadToCloudinary = async (file, folder = 'portfolio') => {
   try {
-    const result = await cloudinary.uploader.upload(file.path, {
+    let uploadSource;
+
+    // Handle both file path (from disk storage) and buffer (from memory storage)
+    if (file.path) {
+      uploadSource = file.path;
+    } else if (file.buffer) {
+      uploadSource = `data:${file.mimetype};base64,${file.buffer.toString('base64')}`;
+    } else {
+      throw new Error('No valid file source found for upload');
+    }
+
+    const result = await cloudinary.uploader.upload(uploadSource, {
       folder: folder,
       resource_type: 'auto',
       transformation: [

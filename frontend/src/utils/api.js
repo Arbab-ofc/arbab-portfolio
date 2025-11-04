@@ -49,9 +49,30 @@ export const projectsAPI = {
 
 export const blogsAPI = {
   getAll: (params) => api.get('/blogs', { params }),
+  getAllForAdmin: (params) => api.get('/blogs/admin/all', { params }),
   getOne: (slug) => api.get(`/blogs/${slug}`),
-  create: (data) => api.post('/blogs', data),
-  update: (id, data) => api.put(`/blogs/${id}`, data),
+  create: (data) => {
+    // If data is FormData, let the browser set the content-type boundary
+    if (data instanceof FormData) {
+      return api.post('/blogs', data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+    }
+    return api.post('/blogs', data);
+  },
+  update: (id, data) => {
+    // If data is FormData, let the browser set the content-type boundary
+    if (data instanceof FormData) {
+      return api.put(`/blogs/${id}`, data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+    }
+    return api.put(`/blogs/${id}`, data);
+  },
   delete: (id) => api.delete(`/blogs/${id}`),
   addComment: (id, data) => api.post(`/blogs/${id}/comments`, data),
 };

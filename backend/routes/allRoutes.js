@@ -1,6 +1,6 @@
 import express from 'express';
 import { protect, adminOnly } from '../middleware/auth.js';
-import { uploadSingle, uploadMultiple } from '../middleware/upload.js';
+import { uploadSingle, uploadMultiple, uploadFields, uploadBlogCover } from '../middleware/upload.js';
 import { contactLimiter, newsletterLimiter, authLimiter } from '../middleware/rateLimiter.js';
 
 // Import controllers
@@ -33,8 +33,23 @@ blogRouter.post('/:id/like', blogController.likeBlog);
 blogRouter.post('/:id/comments', blogController.addComment);
 
 // Admin routes
-blogRouter.post('/', protect, adminOnly, uploadSingle, blogController.createBlog);
-blogRouter.put('/:id', protect, adminOnly, uploadSingle, blogController.updateBlog);
+blogRouter.post('/', protect, adminOnly, (req, res, next) => {
+  // Conditional middleware: only use uploadBlogCover if files are being uploaded
+  if (req.headers['content-type']?.startsWith('multipart/form-data')) {
+    return uploadBlogCover(req, res, next);
+  }
+  next();
+}, blogController.createBlog);
+blogRouter.put('/:id', protect, adminOnly, (req, res, next) => {
+  // Conditional middleware: only use uploadBlogCover if files are being uploaded
+  if (req.headers['content-type']?.startsWith('multipart/form-data')) {
+    return uploadBlogCover(req, res, next);
+  }
+  next();
+}, blogController.updateBlog);
+
+// Admin-only routes
+blogRouter.get('/admin/all', protect, adminOnly, blogController.getAdminBlogs);
 blogRouter.delete('/:id', protect, adminOnly, blogController.deleteBlog);
 
 // ============= SKILL ROUTES =============

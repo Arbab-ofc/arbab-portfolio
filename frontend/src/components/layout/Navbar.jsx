@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiMenu, FiX, FiGithub, FiLinkedin, FiMail } from 'react-icons/fi';
+import PremiumThemeToggle from '../ui/PremiumThemeToggle';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);

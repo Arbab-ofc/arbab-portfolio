@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiMessageSquare, FiTerminal, FiCode, FiCpu, FiHardDrive } from 'react-icons/fi';
+import { FiMessageSquare, FiTerminal, FiCode, FiCpu, FiHardDrive, FiPlay, FiPause } from 'react-icons/fi';
 import { quotesAPI } from '../utils/api';
 
 const Quotes = () => {
@@ -243,8 +243,6 @@ const Quotes = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.8 }}
           className="bg-white dark:bg-gray-800 border border-amber-400/50 dark:border-amber-500/50 rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 shadow-xl"
-          onMouseEnter={() => !isMobile && setIsPaused(true)}
-          onMouseLeave={() => !isMobile && setIsPaused(false)}
         >
           {/* Terminal Header */}
           <div className="bg-gray-900 rounded-t-xl sm:rounded-t-2xl overflow-hidden mb-4 sm:mb-6">
@@ -269,7 +267,9 @@ const Quotes = () => {
                     <span className="text-red-500 animate-pulse font-semibold hidden sm:inline">⏸ PAUSED</span>
                   )}
                   {!isPaused && (
-                    <span className="text-green-500 animate-pulse hidden sm:inline">▶ PLAYING</span>
+                    <span className="text-green-500 animate-pulse hidden sm:inline flex items-center gap-1.5">
+                      <FiPlay className="w-3 h-3 sm:w-4 sm:h-4" />
+                    </span>
                   )}
                 </div>
               </div>
@@ -453,21 +453,11 @@ const Quotes = () => {
               {/* Button Icon & Text */}
               <span className="relative flex items-center gap-2">
                 {isPaused ? (
-                  <>
-                    <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <span className="hidden sm:inline">Play</span>
-                    <span className="sm:hidden">▶</span>
-                  </>
+                  <FiPlay className="w-4 h-4 sm:w-5 sm:h-5 text-green-400" />
                 ) : (
                   <>
-                    <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <span className="hidden sm:inline">Pause</span>
-                    <span className="sm:hidden">⏸</span>
+                    <FiPause className="w-4 h-4 sm:w-5 sm:h-5 text-red-400" />
+                    <span className="hidden sm:inline ml-2 font-mono text-xs">Pause</span>
                   </>
                 )}
               </span>

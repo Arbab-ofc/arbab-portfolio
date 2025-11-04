@@ -16,7 +16,10 @@
       "Bash(node:*)",
       "Bash(mongosh:*)",
       "Bash(xargs kill:*)",
-      "Bash(tree:*)"
+      "Bash(tree:*)",
+      "WebSearch",
+      "Bash(kill:*)",
+      "Bash(npm run)"
     ],
     "deny": [],
     "ask": []
