@@ -7,27 +7,6 @@
       "config": {
         "distDir": "dist"
       }
-    },
-    {
-      "src": "backend/server.js",
-      "use": "@vercel/node"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/backend/server.js",
-      "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"]
-    },
-    {
-      "src": "/socket.io/(.*)",
-      "dest": "/backend/server.js",
-      "methods": ["GET", "POST", "OPTIONS"],
-      "ws": true
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/frontend/dist/$1"
     }
   ],
   "rewrites": [
@@ -36,20 +15,10 @@
       "destination": "/index.html"
     }
   ],
-  "functions": {
-    "backend/server.js": {
-      "runtime": "nodejs18.x",
-      "maxDuration": 30
-    }
-  },
-  "env": {
-    "NODE_ENV": "production"
-  },
   "buildCommand": "cd frontend && npm run build",
   "outputDirectory": "frontend/dist",
-  "installCommand": "cd frontend && npm install && cd ../backend && npm install",
+  "installCommand": "cd frontend && npm install",
   "framework": null,
-  "regions": ["iad1"],
   "headers": [
     {
       "source": "/static/(.*)",
@@ -57,27 +26,6 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/api/(.*)",
-      "headers": [
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "https://arbab-portfolio.vercel.app"
-        },
-        {
-          "key": "Access-Control-Allow-Methods",
-          "value": "GET, POST, PUT, DELETE, OPTIONS, PATCH"
-        },
-        {
-          "key": "Access-Control-Allow-Headers",
-          "value": "Origin, X-Requested-With, Content-Type, Accept, Authorization, Cache-Control, Pragma"
-        },
-        {
-          "key": "Access-Control-Allow-Credentials",
-          "value": "true"
         }
       ]
     },
@@ -109,5 +57,4 @@
   ],
   "cleanUrls": true,
   "trailingSlash": false,
-  "monorepo": false
-}
+  }

@@ -171,7 +171,7 @@ export const sendTokenResponse = (user, statusCode, res) => {
     expires: new Date(Date.now() + parseInt(process.env.JWT_EXPIRE) * 1000),
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    sameSite: 'strict',
+    sameSite: "none",
     path: '/',
   };
 
