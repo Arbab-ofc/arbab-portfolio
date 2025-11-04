@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: arbab-portfolio-backend
+    env: node
+    plan: free
+    buildCommand: "npm install"
+    startCommand: "npm start"
+    healthCheckPath: /health
+    autoDeploy: true
+
+    # Environment variables will be set in Render dashboard
+    # Required variables:
+    # NODE_ENV=production
+    # MONGODB_URI=your_mongodb_uri
+    # JWT_SECRET=your_strong_jwt_secret
+    # JWT_REFRESH_SECRET=your_refresh_secret
+    # FRONTEND_URL=https://arbab-portfolio-ofc.vercel.app
+    # CORS_ORIGIN=https://arbab-portfolio-ofc.vercel.app
+    # EMAIL_USER=your_email@gmail.com
+    # EMAIL_PASSWORD=your_app_password
+    # CLOUDINARY_CLOUD_NAME=djmezf7ax
+    # CLOUDINARY_API_KEY=your_api_key
+    # CLOUDINARY_API_SECRET=your_api_secret
+    # ADMIN_EMAIL=your_admin_email
+    # ADMIN_PASSWORD=your_admin_password
