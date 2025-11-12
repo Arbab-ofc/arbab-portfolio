@@ -46,7 +46,7 @@ const corsOptions = {
 
     // In production, only allow specific origins
     if (process.env.NODE_ENV === 'production') {
-      const allowedOrigins = (process.env.CORS_ORIGIN || process.env.FRONTEND_URL || 'https://arbabofc.free.nf').split(',');
+      const allowedOrigins = (process.env.CORS_ORIGIN || process.env.FRONTEND_URL || 'https://arbabprvt.great-site.net').split(',');
       if (allowedOrigins.indexOf(origin) !== -1) {
         callback(null, true);
       } else {
