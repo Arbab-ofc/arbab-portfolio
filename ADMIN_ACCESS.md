@@ -3,6 +3,7 @@
 ## Hidden Admin Login Portal
 
 ### Access URL
+
 ```
 http://localhost:5173/admin-secret-login-portal
 ```
@@ -14,11 +15,13 @@ http://localhost:5173/admin-secret-login-portal
 ## Login Credentials
 
 ### Email
+
 ```
 arbabprvt@gmail.com
 ```
 
 ### Password
+
 ```
 Admin@123456
 ```
@@ -54,26 +57,31 @@ Authorization: Bearer <your_jwt_token>
 ```
 
 ### Projects Management
+
 - `POST /api/projects` - Create new project
 - `PUT /api/projects/:id` - Update project
 - `DELETE /api/projects/:id` - Delete project
 
 ### Blog Management
+
 - `POST /api/blogs` - Create new blog post
 - `PUT /api/blogs/:id` - Update blog post
 - `DELETE /api/blogs/:id` - Delete blog post
 
 ### Skills Management
+
 - `POST /api/skills` - Add new skill
 - `PUT /api/skills/:id` - Update skill
 - `DELETE /api/skills/:id` - Delete skill
 
 ### Experience Management
+
 - `POST /api/experience` - Add work experience
 - `PUT /api/experience/:id` - Update experience
 - `DELETE /api/experience/:id` - Delete experience
 
 ### Contact Messages
+
 - `GET /api/contact` - View all contact messages
 - `PUT /api/contact/:id` - Update message status
 
@@ -82,6 +90,7 @@ Authorization: Bearer <your_jwt_token>
 ## Testing Admin Login
 
 ### Using cURL
+
 ```bash
 curl -X POST http://localhost:5000/api/auth/login \
   -H "Content-Type: application/json" \
@@ -92,6 +101,7 @@ curl -X POST http://localhost:5000/api/auth/login \
 ```
 
 ### Expected Response
+
 ```json
 {
   "success": true,
@@ -125,34 +135,35 @@ curl -X POST http://localhost:5000/api/auth/login \
 ### For Production:
 
 1. **Change Default Password**
+
    ```javascript
    // Update in backend/.env
    ADMIN_PASSWORD=your_strong_password_here
    ```
-
 2. **Use Strong JWT Secret**
+
    ```javascript
    // Update in backend/.env
    JWT_SECRET=your_very_long_random_secret_key
    ```
-
 3. **Enable HTTPS**
+
    - Use SSL certificates in production
    - Force HTTPS redirects
-
 4. **Add 2FA (Optional)**
+
    - Implement two-factor authentication
    - Use services like Authy or Google Authenticator
-
 5. **IP Whitelisting (Optional)**
+
    - Restrict admin access to specific IPs
    - Use middleware to check IP addresses
-
 6. **Session Timeout**
+
    - JWT tokens expire after 7 days
    - Implement refresh token rotation
-
 7. **Audit Logging**
+
    - Log all admin actions
    - Track who did what and when
 
@@ -163,6 +174,7 @@ curl -X POST http://localhost:5000/api/auth/login \
 To make it even more secure, you can change the hidden URL:
 
 ### In `frontend/src/App.jsx`:
+
 ```javascript
 // Change this line:
 <Route path="/admin-secret-login-portal" element={<AdminLogin />} />
@@ -176,16 +188,19 @@ To make it even more secure, you can change the hidden URL:
 ## Troubleshooting
 
 ### Can't Login?
+
 1. Check if backend server is running (port 5000)
 2. Verify MongoDB connection
 3. Check browser console for errors
 4. Verify credentials are correct
 
 ### Token Expired?
+
 - JWT tokens expire after 7 days
 - Simply login again to get a new token
 
 ### Forgot Password?
+
 - Run the seed script again to reset admin user:
   ```bash
   cd backend
@@ -197,6 +212,7 @@ To make it even more secure, you can change the hidden URL:
 ## Future Enhancements
 
 ### Admin Dashboard (Coming Soon)
+
 - [ ] Dashboard overview with statistics
 - [ ] Content management interface
 - [ ] Analytics and insights
@@ -220,11 +236,13 @@ To make it even more secure, you can change the hidden URL:
 ## Quick Access
 
 **Local Development:**
+
 - Frontend: http://localhost:5173
 - Backend: http://localhost:5000
 - Admin Login: http://localhost:5173/admin-secret-login-portal
 
 **Production:**
+
 - Update URLs after deployment
 - Use environment variables for configuration
 
@@ -239,6 +257,7 @@ To make it even more secure, you can change the hidden URL:
 ## Support
 
 For any issues or questions:
+
 - Email: arbabprvt@gmail.com
 - GitHub: https://github.com/Arbab-ofc
 
